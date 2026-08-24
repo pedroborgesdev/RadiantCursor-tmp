@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "radiantcursoreffect.h"
+#include "../common/trailgeometry.h"
 
 #include "core/rendertarget.h"
 #include "core/renderviewport.h"
@@ -94,6 +95,10 @@ void RadiantCursorEffect::reconfigure(ReconfigureFlags)
     m_trailDensity = std::clamp(config.readEntry("TrailDensity", 65), 1, 100);
     m_trailFrequency = std::clamp(config.readEntry("TrailFrequency", 30), 1, 240);
     m_trailOpacity = std::clamp(config.readEntry("TrailOpacity", 0.72), 0.05, 1.0);
+    m_cursorCenterOffset = QPointF(
+        std::clamp(config.readEntry("TrailOffsetX", 8.0), -128.0, 128.0),
+        std::clamp(config.readEntry("TrailOffsetY", 8.0), -128.0, 128.0));
+    m_trailDistance = std::clamp(config.readEntry("TrailDistance", 0.0), 0.0, 128.0);
     m_font = config.readEntry("Font", QFont(QStringLiteral("Noto Sans"), 10));
 
     const QString style = config.readEntry("Style", QStringLiteral("ripple")).toLower();
@@ -263,16 +268,20 @@ void RadiantCursorEffect::handleMouseChanged(const QPointF &position, const QPoi
         const int variant = variantOrder[emissionSerial % 4];
         for (int sample = 1; sample <= samples; ++sample) {
             const float amount = float(sample) / float(samples);
-            const QPointF samplePosition = oldPosition + (position - oldPosition) * amount;
             for (int particle = 0; particle < particlesPerSample; ++particle) {
                 const int particleIndex = sample * 8 + particle;
-                const float arrangementAngle = layoutRotation(variant)
-                    + 2.0f * std::numbers::pi_v<float> * particle / particlesPerSample
-                    + (layoutValue(particleIndex, variant, 0) - 0.5f) * 0.72f;
                 const float spread = m_trailSize
                     * (0.18f + 0.82f * layoutValue(particleIndex, variant, 1));
-                const QPointF particlePosition = samplePosition
-                    + QPointF(std::cos(arrangementAngle), std::sin(arrangementAngle)) * spread;
+                const float distanceBehind = distance * (1.0f - amount);
+                const float lateralOffset =
+                    (layoutValue(particleIndex, variant, 0) - 0.5f) * spread * 0.9f;
+                const auto placed = RadiantCursorTrail::positionBehind(
+                    {float(position.x() + m_cursorCenterOffset.x()),
+                     float(position.y() + m_cursorCenterOffset.y())},
+                    {movement.x(), movement.y()},
+                    m_trailDistance + distanceBehind,
+                    lateralOffset);
+                const QPointF particlePosition(placed.x, placed.y);
                 const float directionAngle = movementAngle
                     + (layoutValue(particleIndex, variant, 2) - 0.5f) * 0.9f;
                 const QVector2D particleDirection(std::cos(directionAngle), std::sin(directionAngle));

@@ -261,7 +261,8 @@ function TrailSettings({ settings, update }: { settings: RadiantCursorSettings; 
     </div>
     <SettingsSection title="Mais opções">
       <div className="more-grid trail-more">
-        <CompactRanges><Range label="Densidade" value={settings.TrailDensity} min={1} max={100} suffix="%" onChange={(value) => update("TrailDensity", value)} /><Range label="Opacidade" value={settings.TrailOpacity} min={0.05} max={1} step={0.05} display={(value) => `${Math.round(value * 100)}%`} onChange={(value) => update("TrailOpacity", value)} /></CompactRanges>
+        <div className="trail-option-group"><strong>Partículas</strong><CompactRanges><Range label="Densidade" value={settings.TrailDensity} min={1} max={100} suffix="%" onChange={(value) => update("TrailDensity", value)} /><Range label="Opacidade" value={settings.TrailOpacity} min={0.05} max={1} step={0.05} display={(value) => `${Math.round(value * 100)}%`} onChange={(value) => update("TrailOpacity", value)} /></CompactRanges></div>
+        <div className="trail-option-group"><strong>Ponto verde</strong><CompactRanges><Range label="Eixo X" value={settings.TrailOffsetX} min={-64} max={64} suffix=" px" onChange={(value) => update("TrailOffsetX", value)} /><Range label="Eixo Y" value={settings.TrailOffsetY} min={-64} max={64} suffix=" px" onChange={(value) => update("TrailOffsetY", value)} /><Range label="Distância" value={settings.TrailDistance} min={0} max={64} suffix=" px" onChange={(value) => update("TrailDistance", value)} /></CompactRanges></div>
         <div className="toggle-pair"><Toggle label="Brilho" value={settings.TrailGlow} onChange={(value) => update("TrailGlow", value)} /><Toggle label="Só durante clique" value={settings.TrailOnlyPressed} onChange={(value) => update("TrailOnlyPressed", value)} /></div>
       </div>
     </SettingsSection>

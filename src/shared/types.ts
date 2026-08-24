@@ -74,6 +74,9 @@ export interface RadiantCursorSettings {
   TrailDensity: number;
   TrailFrequency: number;
   TrailOpacity: number;
+  TrailOffsetX: number;
+  TrailOffsetY: number;
+  TrailDistance: number;
   TrailGlow: boolean;
   TrailOnlyPressed: boolean;
 }
@@ -156,6 +159,9 @@ export const DEFAULT_RADIANT_CURSOR_SETTINGS: Readonly<RadiantCursorSettings> = 
   TrailDensity: 65,
   TrailFrequency: 30,
   TrailOpacity: 0.72,
+  TrailOffsetX: 8,
+  TrailOffsetY: 8,
+  TrailDistance: 0,
   TrailGlow: true,
   TrailOnlyPressed: false,
 });

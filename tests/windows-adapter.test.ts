@@ -18,15 +18,18 @@ test("adaptador Windows persiste configuração validada sem iniciar o runtime",
     setLoginItem: (enabled) => loginChanges.push(enabled),
   });
 
-  const state = await adapter.applySettings({ ...DEFAULT_RADIANT_CURSOR_SETTINGS, Style: "nova" });
+  const state = await adapter.applySettings({ ...DEFAULT_RADIANT_CURSOR_SETTINGS, Style: "nova", TrailOffsetX: -4, TrailOffsetY: 12, TrailDistance: 18 });
   assert.equal(state.settings.Style, "nova");
   assert.equal(state.isLoaded, false);
   assert.equal(state.compatibility.platform, "windows");
   assert.equal(state.compatibility.runtimeInstalled, false);
   assert.deepEqual(loginChanges, []);
 
-  const stored = JSON.parse(await readFile(join(root, "runtime", "state.json"), "utf8")) as { settings: { Style: string }; enabled: boolean };
+  const stored = JSON.parse(await readFile(join(root, "runtime", "state.json"), "utf8")) as { settings: { Style: string; TrailOffsetX: number; TrailOffsetY: number; TrailDistance: number }; enabled: boolean };
   assert.equal(stored.settings.Style, "nova");
+  assert.equal(stored.settings.TrailOffsetX, -4);
+  assert.equal(stored.settings.TrailOffsetY, 12);
+  assert.equal(stored.settings.TrailDistance, 18);
   assert.equal(stored.enabled, false);
 });
 

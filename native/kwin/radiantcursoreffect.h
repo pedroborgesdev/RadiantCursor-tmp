@@ -133,6 +133,8 @@ private:
     int m_trailDensity = 65;
     int m_trailFrequency = 30;
     float m_trailOpacity = 0.72f;
+    QPointF m_cursorCenterOffset{8.0, 8.0};
+    float m_trailDistance = 0.0f;
     QFont m_font;
     QString m_style = QStringLiteral("ripple");
     Trigger m_trigger = Trigger::Press;

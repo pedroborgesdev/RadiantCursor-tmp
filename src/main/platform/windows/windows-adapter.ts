@@ -109,7 +109,10 @@ export class WindowsRuntimeAdapter implements RuntimeAdapter {
       return {
         schemaVersion: 1,
         enabled: raw.enabled === true,
-        settings: validateRadiantCursorSettings(raw.settings),
+        settings: validateRadiantCursorSettings({
+          ...DEFAULT_RADIANT_CURSOR_SETTINGS,
+          ...(raw.settings && typeof raw.settings === "object" ? raw.settings : {}),
+        }),
         activeEffectId: typeof raw.activeEffectId === "string" && SAFE_EFFECT_ID.test(raw.activeEffectId) ? raw.activeEffectId : null,
         activeRevision: typeof raw.activeRevision === "string" && SAFE_REVISION.test(raw.activeRevision) ? raw.activeRevision : null,
         updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : new Date(0).toISOString(),

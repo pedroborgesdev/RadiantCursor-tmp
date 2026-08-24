@@ -225,8 +225,9 @@
 .more-grid > .compact-ranges { grid-column: 2; grid-row: 1 / span 2; }
 .more-grid > .toggle-pair { grid-column: 1; }
 .more-grid.trail-more { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-.more-grid.trail-more > .compact-ranges { grid-column: 1; grid-row: 1; }
-.more-grid.trail-more > .toggle-pair { grid-column: 2; grid-row: 1; }
+.more-grid.trail-more > .trail-option-group { min-width: 0; }
+.more-grid.trail-more > .trail-option-group > strong { display: block; margin-bottom: 10px; color: var(--fx-muted); font-size: 9px; }
+.more-grid.trail-more > .toggle-pair { grid-column: 1 / -1; grid-row: 2; }
 .more-grid .compact-ranges { gap: 11px; }
 .more-grid .compact-range { grid-template-columns: 72px minmax(70px, 1fr) 56px; gap: 7px; }
 .compact-select { position: relative; display: flex; flex-direction: column; gap: 6px; color: var(--fx-muted); font-size: 9px; }

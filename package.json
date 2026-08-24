@@ -19,7 +19,7 @@
     "typecheck:main": "tsc -p tsconfig.main.json --noEmit",
     "typecheck:renderer": "tsc -p tsconfig.renderer.json --noEmit",
     "test": "npm run test:compile && node --test .test-dist/tests/*.test.js",
-    "test:native-runtime": "c++ -std=c++20 -O2 -Inative/windows/src native/windows/tests/runtime_model_test.cpp native/windows/src/json.cpp native/windows/src/runtime_model.cpp -o /tmp/radiantcursor-runtime-model-test && /tmp/radiantcursor-runtime-model-test",
+    "test:native-runtime": "c++ -std=c++20 -O2 -Inative/windows/src -Inative/windows/engine native/windows/tests/effectengine_test.cpp native/windows/src/json.cpp native/windows/engine/effectengine.cpp -o /tmp/radiantcursor-effectengine-test && /tmp/radiantcursor-effectengine-test",
     "test:compile": "tsc -p tsconfig.test.json",
     "bundle:main": "esbuild src/main/main.ts --bundle --platform=node --format=cjs --target=node24 --external:electron --outfile=dist/main/main.js --sourcemap",
     "bundle:preload": "esbuild src/main/preload.ts --bundle --platform=node --format=cjs --target=node24 --external:electron --outfile=dist/main/preload.js --sourcemap",

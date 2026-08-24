@@ -1,6 +1,6 @@
 #pragma once
 
-#include "runtime_model.h"
+#include "../engine/effectengine.h"
 
 #include <windows.h>
 #include <d2d1_1.h>
@@ -59,31 +59,69 @@ private:
     bool createOverlay(HMONITOR monitor, const RECT &bounds, std::wstring &error);
     void destroyOverlays();
     bool reloadConfiguration();
-    void handleClick(WPARAM message, const MSLLHOOKSTRUCT &data);
+    void handleMouseEvent(WPARAM message, const MSLLHOOKSTRUCT &data);
+    void handleMouseMove(POINT position, std::uint64_t now);
+    POINT cursorTrailOrigin(POINT hotspotPosition, Vec2 movement);
     void tick();
-    void emitTrail(POINT position, POINT previous, std::uint64_t now);
+    void emitTrail(POINT position, POINT previous, Vec2 movementDirection, std::uint64_t now);
     void render(std::uint64_t now);
-    void drawLegacy(Overlay &overlay, const ClickEvent &event, float progress);
-    void drawTrail(Overlay &overlay, const TrailParticle &particle, float progress);
+    void drawEvent(Overlay &overlay, const ClickEvent &event, float progress);
+    void drawRipple(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawPulse(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawTarget(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawBurst(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawSpark(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawFocus(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawHalo(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawShockwave(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawOrbit(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawPetals(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawDiamond(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawSonar(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawVortex(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawCross(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawConfetti(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawLightning(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawBubbles(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawHeart(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawInk(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawSplash(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawNova(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawComet(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawEclipse(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawPlasma(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawPixelBurst(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawPrism(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawFlower(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawMeteor(Overlay &overlay, const ClickEvent &event, Color color, float progress);
+    void drawTrailPoint(Overlay &overlay, const TrailParticle &point, float progress);
     void drawDeclarative(Overlay &overlay, const ClickEvent &event, int elapsed);
     void drawCircle(Overlay &overlay, Vec2 center, float radius, Color color, float width, bool filled, bool glow = false);
-    void drawEllipse(Overlay &overlay, Vec2 center, Vec2 radius, Color color, float width, bool filled);
     void drawPolygon(Overlay &overlay, const std::vector<Vec2> &points, Color color, float width, bool filled, bool closed = true);
-    void drawShape(Overlay &overlay, const DrawShape &shape);
+    void drawLineSegments(Overlay &overlay, const std::vector<Vec2> &points, Color color, float width);
+    void drawLineStrip(Overlay &overlay, const std::vector<Vec2> &points, Color color, float width, bool closed = false);
+    void drawRenderCommand(Overlay &overlay, const RadiantCursorEngine::RenderCommand &command);
     void drawLabel(Overlay &overlay, const ClickEvent &event, float alpha);
     Vec2 local(const Overlay &overlay, Vec2 global) const;
+    float displayScaleAt(POINT position) const;
+    bool visibleOn(const Overlay &overlay, Vec2 position, float margin) const;
 
     std::filesystem::path dataDirectory_;
     RuntimeConfiguration configuration_;
-    std::shared_ptr<const RuntimeProgram> activeProgram_;
+    std::shared_ptr<const RadiantCursorEngine::CompiledEffect> activeProgram_;
     HWND controlWindow_ = nullptr;
     HHOOK mouseHook_ = nullptr;
     std::vector<std::unique_ptr<Overlay>> overlays_;
     std::vector<ClickEvent> clicks_;
     std::vector<TrailParticle> trail_;
+    std::unique_ptr<TrailParticle> liveTrailHead_;
+    std::vector<RadiantCursorEngine::RenderCommand> renderCommands_;
     POINT previousCursor_{};
+    POINT lastTrailEmissionCursor_{};
     bool havePreviousCursor_ = false;
+    bool haveTrailEmissionCursor_ = false;
     bool anyButtonPressed_ = false;
+    bool drawingTrail_ = false;
     bool hadVisibleFrame_ = false;
     unsigned eventSequence_ = 0;
     unsigned trailSequence_ = 0;
@@ -97,6 +135,7 @@ private:
     ComHandle<ID2D1Factory1> d2dFactory_;
     ComHandle<ID2D1Device> d2dDevice_;
     ComHandle<ID2D1DeviceContext> d2dContext_;
+    ComHandle<ID2D1SolidColorBrush> brush_;
     ComHandle<IDCompositionDevice> compositionDevice_;
     ComHandle<IDWriteFactory> writeFactory_;
 

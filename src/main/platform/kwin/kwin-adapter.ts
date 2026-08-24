@@ -51,6 +51,9 @@ const SETTING_KEYS = [
   "TrailDensity",
   "TrailFrequency",
   "TrailOpacity",
+  "TrailOffsetX",
+  "TrailOffsetY",
+  "TrailDistance",
   "TrailGlow",
   "TrailOnlyPressed",
 ] as const satisfies readonly (keyof RadiantCursorSettings)[];
@@ -229,6 +232,9 @@ export function validateRadiantCursorSettings(value: unknown): RadiantCursorSett
     TrailDensity: validateNumber(value.TrailDensity, "TrailDensity", 1, 100, true),
     TrailFrequency: validateNumber(value.TrailFrequency, "TrailFrequency", 1, 240, true),
     TrailOpacity: validateNumber(value.TrailOpacity, "TrailOpacity", 0.05, 1),
+    TrailOffsetX: validateNumber(value.TrailOffsetX, "TrailOffsetX", -128, 128),
+    TrailOffsetY: validateNumber(value.TrailOffsetY, "TrailOffsetY", -128, 128),
+    TrailDistance: validateNumber(value.TrailDistance, "TrailDistance", 0, 128),
     TrailGlow: value.TrailGlow,
     TrailOnlyPressed: value.TrailOnlyPressed,
   };
@@ -655,6 +661,9 @@ export class KWinController {
       TrailDensity: parseNumber(raw.TrailDensity, defaults.TrailDensity, 1, 100, true),
       TrailFrequency: parseNumber(raw.TrailFrequency, defaults.TrailFrequency, 1, 240, true),
       TrailOpacity: parseNumber(raw.TrailOpacity, defaults.TrailOpacity, 0.05, 1),
+      TrailOffsetX: parseNumber(raw.TrailOffsetX, defaults.TrailOffsetX, -128, 128),
+      TrailOffsetY: parseNumber(raw.TrailOffsetY, defaults.TrailOffsetY, -128, 128),
+      TrailDistance: parseNumber(raw.TrailDistance, defaults.TrailDistance, 0, 128),
       TrailGlow: parseBoolean(raw.TrailGlow, defaults.TrailGlow),
       TrailOnlyPressed: parseBoolean(raw.TrailOnlyPressed, defaults.TrailOnlyPressed),
     };
