@@ -1,0 +1,15 @@
+{
+  "KPlugin": {
+    "Authors": [
+      {
+        "Name": "RadiantCursor contributors"
+      }
+    ],
+    "Category": "Accessibility",
+    "Description": "Customizable global mouse click and cursor trail animations for RadiantCursor",
+    "EnabledByDefault": false,
+    "License": "GPL-3.0-or-later",
+    "Name": "RadiantCursor",
+    "Name[pt_BR]": "RadiantCursor"
+  }
+}

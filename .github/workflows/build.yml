@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  web-and-core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:native-runtime
+      - run: npm run build
+
+  windows-runtime:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build:runtime:windows
+      - run: npm run build
+      - run: npm run package:windows:normal:built
+      - run: npm run package:windows:studio:built
+      - uses: actions/upload-artifact@v4
+        with:
+          name: radiantcursor-windows
+          path: |
+            release/radiantcursor-windows/*.exe
+            release/radiantcursor-studio-windows/*.exe

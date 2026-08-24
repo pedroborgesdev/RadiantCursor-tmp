@@ -1,0 +1,47 @@
+{
+  "appId": "app.radiantcursor.studio",
+  "productName": "RadiantCursor Studio",
+  "asar": true,
+  "extraMetadata": {
+    "name": "radiantcursor-studio",
+    "productName": "RadiantCursor Studio"
+  },
+  "extraResources": [
+    "rcs-icon.png"
+  ],
+  "files": [
+    "dist/main/**/*",
+    "dist/renderer-studio/**/*",
+    "package.json",
+    "!dist/**/*.map"
+  ],
+  "directories": {
+    "output": "release/radiantcursor-studio"
+  },
+  "linux": {
+    "target": [
+      "dir"
+    ],
+    "category": "Graphics",
+    "icon": "rcs-icon.png",
+    "executableName": "radiantcursor-studio"
+  },
+  "win": {
+    "target": ["nsis"],
+    "icon": "rcs-icon.png",
+    "executableName": "RadiantCursor Studio",
+    "artifactName": "RadiantCursor-Studio-${version}-${arch}.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "perMachine": false,
+    "deleteAppDataOnUninstall": false,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true
+  },
+  "electronLanguages": [
+    "pt-BR",
+    "en-US"
+  ]
+}

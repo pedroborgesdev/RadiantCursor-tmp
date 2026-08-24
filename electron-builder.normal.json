@@ -1,0 +1,45 @@
+{
+  "appId": "app.radiantcursor",
+  "productName": "RadiantCursor",
+  "asar": true,
+  "extraMetadata": {
+    "name": "radiantcursor",
+    "productName": "RadiantCursor"
+  },
+  "extraResources": ["rc-icon.png"],
+  "files": [
+    "dist/main/**/*",
+    "dist/renderer-normal/**/*",
+    "package.json",
+    "!dist/**/*.map"
+  ],
+  "directories": {
+    "output": "release/radiantcursor"
+  },
+  "linux": {
+    "target": [
+      "dir"
+    ],
+    "category": "Utility",
+    "icon": "rc-icon.png",
+    "executableName": "radiantcursor"
+  },
+  "win": {
+    "target": ["nsis"],
+    "icon": "rc-icon.png",
+    "executableName": "RadiantCursor",
+    "artifactName": "RadiantCursor-${version}-${arch}.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "perMachine": false,
+    "deleteAppDataOnUninstall": false,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true
+  },
+  "electronLanguages": [
+    "pt-BR",
+    "en-US"
+  ]
+}
