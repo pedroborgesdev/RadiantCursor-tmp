@@ -1,0 +1,1775 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/uname"
+      - "/home/pedroborges/node_modules/.bin/uname"
+      - "/home/node_modules/.bin/uname"
+      - "/node_modules/.bin/uname"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/uname"
+      - "/home/pedroborges/.local/bin/uname"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/uname"
+      - "/usr/local/sbin/uname"
+      - "/usr/local/bin/uname"
+      - "/usr/sbin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:207 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The target system is: Windows -  - 
+      The host system is: Linux - 7.0.0-30-generic - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gmake"
+      - "make"
+      - "smake"
+    candidate_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/gmake"
+      - "/home/pedroborges/node_modules/.bin/gmake"
+      - "/home/node_modules/.bin/gmake"
+      - "/node_modules/.bin/gmake"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/gmake"
+      - "/home/pedroborges/.local/bin/gmake"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/gmake"
+      - "/usr/local/sbin/gmake"
+      - "/usr/local/bin/gmake"
+      - "/usr/sbin/gmake"
+    found: "/usr/bin/gmake"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:71 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-g++"
+    candidate_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-g++"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-g++"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-g++"
+      - "/node_modules/.bin/x86_64-w64-mingw32-g++"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-g++"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-g++"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-g++"
+      - "/usr/local/sbin/x86_64-w64-mingw32-g++"
+      - "/usr/local/bin/x86_64-w64-mingw32-g++"
+      - "/usr/sbin/x86_64-w64-mingw32-g++"
+    found: "/usr/bin/x86_64-w64-mingw32-g++"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/usr/share/cmake-4.2/Modules/"
+    found: "/usr/share/cmake-4.2/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/x86_64-w64-mingw32-g++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/4.2.3/CompilerIdCXX/a.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-ar"
+      - "ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-ranlib"
+      - "ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-strip"
+      - "strip"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-strip"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-ld"
+      - "ld"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-ld"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-nm"
+      - "nm"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-nm"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-objdump"
+      - "objdump"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-objdump"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-objcopy"
+      - "objcopy"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-objcopy"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-readelf"
+      - "readelf"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-readelf"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-dlltool"
+      - "dlltool"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-dlltool"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-addr2line"
+      - "addr2line"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    found: "/usr/bin/x86_64-w64-mingw32-addr2line"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-tapi"
+      - "tapi"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/x86_64-w64-mingw32-tapi"
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-tapi"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-tapi"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-tapi"
+      - "/node_modules/.bin/x86_64-w64-mingw32-tapi"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-tapi"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-tapi"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-tapi"
+      - "/usr/local/sbin/x86_64-w64-mingw32-tapi"
+      - "/usr/local/bin/x86_64-w64-mingw32-tapi"
+      - "/usr/sbin/x86_64-w64-mingw32-tapi"
+      - "/sbin/x86_64-w64-mingw32-tapi"
+      - "/bin/x86_64-w64-mingw32-tapi"
+      - "/usr/games/x86_64-w64-mingw32-tapi"
+      - "/usr/local/games/x86_64-w64-mingw32-tapi"
+      - "/snap/bin/x86_64-w64-mingw32-tapi"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/x86_64-w64-mingw32-tapi"
+      - "/usr/bin/tapi"
+      - "/home/pedroborges/Code/node_modules/.bin/tapi"
+      - "/home/pedroborges/node_modules/.bin/tapi"
+      - "/home/node_modules/.bin/tapi"
+      - "/node_modules/.bin/tapi"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/tapi"
+      - "/home/pedroborges/.local/bin/tapi"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/tapi"
+      - "/usr/local/sbin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/usr/sbin/tapi"
+      - "/sbin/tapi"
+      - "/bin/tapi"
+      - "/usr/games/tapi"
+      - "/usr/local/games/tapi"
+      - "/snap/bin/tapi"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ar-13.0"
+      - "x86_64-w64-mingw32-gcc-ar-13"
+      - "x86_64-w64-mingw32-gcc-ar13"
+      - "x86_64-w64-mingw32-gcc-ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/games/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/games/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/snap/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/node_modules/.bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/games/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/games/x86_64-w64-mingw32-gcc-ar-13"
+      - "/snap/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/node_modules/.bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar13"
+      - "/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/games/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/games/x86_64-w64-mingw32-gcc-ar13"
+      - "/snap/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/x86_64-w64-mingw32-gcc-ar13"
+    found: "/usr/bin/x86_64-w64-mingw32-gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "x86_64-w64-mingw32-gcc-ranlib-13"
+      - "x86_64-w64-mingw32-gcc-ranlib13"
+      - "x86_64-w64-mingw32-gcc-ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+    searched_directories:
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/games/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/games/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/snap/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/games/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/games/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/snap/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/pedroborges/Code/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/pedroborges/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/node_modules/.bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/pedroborges/.local/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/games/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/games/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/snap/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/x86_64-w64-mingw32-gcc-ranlib13"
+    found: "/usr/bin/x86_64-w64-mingw32-gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl"
+      binary: "/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ed965/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ed965.dir/build.make CMakeFiles/cmTC_ed965.dir/build
+        gmake[1]: Entering directory '/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl'
+        Building CXX object CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj
+        /usr/bin/x86_64-w64-mingw32-g++   -v -o CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++
+        Target: x86_64-w64-mingw32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=win32 --program-suffix=-win32 --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: win32
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13-win32 (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ed965.dir/'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/cc1plus -quiet -v -U_REENTRANT /usr/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_ed965.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cct0TAl6.s
+        GNU C++17 (GCC) version 13-win32 (x86_64-w64-mingw32)
+        	compiled by GNU C version 13.2.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.27-GMP
+        
+        warning: MPFR header version 4.2.1 differs from library version 4.2.2.
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/sys-include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/x86_64-w64-mingw32
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/backward
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include-fixed
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/include
+        End of search list.
+        Compiler executable checksum: d9aa912102515005505aa1bbf0e5f800
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ed965.dir/'
+         /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cct0TAl6.s
+        GNU assembler version 2.45.90 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45.90.20260125
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_ed965.exe
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ed965.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++
+        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper
+        Target: x86_64-w64-mingw32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=win32 --program-suffix=-win32 --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: win32
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13-win32 (GCC) 
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_ed965.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ed965.'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-win32/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper -plugin-opt=-fresolution=/tmp/ccM7pxD4.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_ed965.exe /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32 -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_ed965.dir/objects.a --no-whole-archive --out-implib libcmTC_ed965.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o
+        collect2 version 13-win32
+        /usr/bin/x86_64-w64-mingw32-ld -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-win32/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper -plugin-opt=-fresolution=/tmp/ccM7pxD4.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_ed965.exe /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32 -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_ed965.dir/objects.a --no-whole-archive --out-implib libcmTC_ed965.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o
+        GNU ld (GNU Binutils) 2.45.90.20260125
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_ed965.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ed965.'
+        /usr/bin/cmake -E rm -f CMakeFiles/cmTC_ed965.dir/objects.a
+        /usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_ed965.dir/objects.a @CMakeFiles/cmTC_ed965.dir/objects1.rsp
+        /usr/bin/x86_64-w64-mingw32-g++  -v -Wl,-v -Wl,--whole-archive CMakeFiles/cmTC_ed965.dir/objects.a -Wl,--no-whole-archive -o cmTC_ed965.exe -Wl,--out-implib,libcmTC_ed965.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+        gmake[1]: Leaving directory '/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/x86_64-w64-mingw32]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/backward]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include-fixed]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/x86_64-w64-mingw32] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/x86_64-w64-mingw32]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/backward] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/backward]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include-fixed] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include-fixed]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/include] ==> [/usr/x86_64-w64-mingw32/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++;/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/x86_64-w64-mingw32;/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/backward;/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include;/usr/lib/gcc/x86_64-w64-mingw32/13-win32/include-fixed;/usr/x86_64-w64-mingw32/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ed965/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_ed965.dir/build.make CMakeFiles/cmTC_ed965.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl']
+        ignore line: [Building CXX object CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-g++   -v -o CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=win32 --program-suffix=-win32 --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed]
+        ignore line: [Thread model: win32]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13-win32 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ed965.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/cc1plus -quiet -v -U_REENTRANT /usr/share/cmake-4.2/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_ed965.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cct0TAl6.s]
+        ignore line: [GNU C++17 (GCC) version 13-win32 (x86_64-w64-mingw32)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.27-GMP]
+        ignore line: []
+        ignore line: [warning: MPFR header version 4.2.1 differs from library version 4.2.2.]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/sys-include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/x86_64-w64-mingw32]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/backward]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include-fixed]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: d9aa912102515005505aa1bbf0e5f800]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ed965.dir/']
+        ignore line: [ /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cct0TAl6.s]
+        ignore line: [GNU assembler version 2.45.90 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45.90.20260125]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ed965.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_ed965.exe]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ed965.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=win32 --program-suffix=-win32 --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed]
+        ignore line: [Thread model: win32]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13-win32 (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_ed965.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ed965.']
+        link line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-win32/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-win32/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper -plugin-opt=-fresolution=/tmp/ccM7pxD4.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_ed965.exe /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32 -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_ed965.dir/objects.a --no-whole-archive --out-implib libcmTC_ed965.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccM7pxD4.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmoldname] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-ladvapi32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lshell32] ==> ignore
+          arg [-plugin-opt=-pass-through=-luser32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmoldname] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-m] ==> ignore
+          arg [i386pep] ==> ignore
+          arg [-Bdynamic] ==> search dynamic
+          arg [-o] ==> ignore
+          arg [cmTC_ed965.exe] ==> ignore
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o]
+          arg [-L/usr/lib/gcc/x86_64-w64-mingw32/13-win32] ==> dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32]
+          arg [-L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib] ==> dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib]
+          arg [-v] ==> ignore
+          arg [--whole-archive] ==> ignore
+          arg [CMakeFiles/cmTC_ed965.dir/objects.a] ==> ignore
+          arg [--no-whole-archive] ==> ignore
+          arg [--out-implib] ==> ignore
+          arg [libcmTC_ed965.dll.a] ==> ignore
+          arg [--major-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [--minor-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lmoldname] ==> lib [moldname]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-ladvapi32] ==> lib [advapi32]
+          arg [-lshell32] ==> lib [shell32]
+          arg [-luser32] ==> lib [user32]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lmoldname] ==> lib [moldname]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o]
+        ignore line: [collect2 version 13-win32]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-ld -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-win32/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper -plugin-opt=-fresolution=/tmp/ccM7pxD4.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_ed965.exe /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32 -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_ed965.dir/objects.a --no-whole-archive --out-implib libcmTC_ed965.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o]
+        ignore line: [GNU ld (GNU Binutils) 2.45.90.20260125]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_ed965.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ed965.']
+        ignore line: [/usr/bin/cmake -E rm -f CMakeFiles/cmTC_ed965.dir/objects.a]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_ed965.dir/objects.a @CMakeFiles/cmTC_ed965.dir/objects1.rsp]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-g++  -v -Wl -v -Wl --whole-archive CMakeFiles/cmTC_ed965.dir/objects.a -Wl --no-whole-archive -o cmTC_ed965.exe -Wl --out-implib libcmTC_ed965.dll.a -Wl --major-image-version 0 --minor-image-version 0]
+        ignore line: [gmake[1]: Leaving directory '/home/pedroborges/Code/native/windows/build/linux-mingw-x64/CMakeFiles/CMakeScratch/TryCompile-kZ5Uvl']
+        ignore line: []
+        ignore line: []
+        remove lib [msvcrt]
+        remove lib [msvcrt]
+        collapse obj [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o] ==> [/usr/x86_64-w64-mingw32/lib/crt2.o]
+        collapse library dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-win32]
+        collapse library dir [/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib] ==> [/usr/x86_64-w64-mingw32/lib]
+        implicit libs: [stdc++;mingw32;gcc_s;gcc;moldname;mingwex;kernel32;advapi32;shell32;user32;kernel32;mingw32;gcc_s;gcc;moldname;mingwex;kernel32]
+        implicit objs: [/usr/x86_64-w64-mingw32/lib/crt2.o;/usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o;/usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-w64-mingw32/13-win32;/usr/x86_64-w64-mingw32/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CTest.cmake:188 (find_program)"
+      - "CMakeLists.txt:37 (include)"
+    mode: "program"
+    variable: "MEMORYCHECK_COMMAND"
+    description: "Path to the memory checking command, used for memory error detection."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "purify"
+      - "valgrind"
+      - "boundscheck"
+      - "drmemory"
+      - "cuda-memcheck"
+      - "compute-sanitizer"
+    candidate_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+      - "/usr/bin/"
+      - "/usr/sbin/"
+      - "/usr/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/purify"
+      - "/home/pedroborges/node_modules/.bin/purify"
+      - "/home/node_modules/.bin/purify"
+      - "/node_modules/.bin/purify"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/purify"
+      - "/home/pedroborges/.local/bin/purify"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/purify"
+      - "/usr/local/sbin/purify"
+      - "/usr/local/bin/purify"
+      - "/usr/sbin/purify"
+      - "/usr/bin/purify"
+      - "/sbin/purify"
+      - "/bin/purify"
+      - "/usr/games/purify"
+      - "/usr/local/games/purify"
+      - "/snap/bin/purify"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/purify"
+      - "/usr/bin/purify"
+      - "/usr/sbin/purify"
+      - "/usr/purify"
+      - "/usr/local/bin/purify"
+      - "/usr/local/sbin/purify"
+      - "/usr/local/purify"
+      - "/bin/purify"
+      - "/sbin/purify"
+      - "/home/pedroborges/Code/node_modules/.bin/valgrind"
+      - "/home/pedroborges/node_modules/.bin/valgrind"
+      - "/home/node_modules/.bin/valgrind"
+      - "/node_modules/.bin/valgrind"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/valgrind"
+      - "/home/pedroborges/.local/bin/valgrind"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/valgrind"
+      - "/usr/local/sbin/valgrind"
+      - "/usr/local/bin/valgrind"
+      - "/usr/sbin/valgrind"
+      - "/usr/bin/valgrind"
+      - "/sbin/valgrind"
+      - "/bin/valgrind"
+      - "/usr/games/valgrind"
+      - "/usr/local/games/valgrind"
+      - "/snap/bin/valgrind"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/valgrind"
+      - "/usr/bin/valgrind"
+      - "/usr/sbin/valgrind"
+      - "/usr/valgrind"
+      - "/usr/local/bin/valgrind"
+      - "/usr/local/sbin/valgrind"
+      - "/usr/local/valgrind"
+      - "/bin/valgrind"
+      - "/sbin/valgrind"
+      - "/home/pedroborges/Code/node_modules/.bin/boundscheck"
+      - "/home/pedroborges/node_modules/.bin/boundscheck"
+      - "/home/node_modules/.bin/boundscheck"
+      - "/node_modules/.bin/boundscheck"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/boundscheck"
+      - "/home/pedroborges/.local/bin/boundscheck"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/boundscheck"
+      - "/usr/local/sbin/boundscheck"
+      - "/usr/local/bin/boundscheck"
+      - "/usr/sbin/boundscheck"
+      - "/usr/bin/boundscheck"
+      - "/sbin/boundscheck"
+      - "/bin/boundscheck"
+      - "/usr/games/boundscheck"
+      - "/usr/local/games/boundscheck"
+      - "/snap/bin/boundscheck"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/boundscheck"
+      - "/usr/bin/boundscheck"
+      - "/usr/sbin/boundscheck"
+      - "/usr/boundscheck"
+      - "/usr/local/bin/boundscheck"
+      - "/usr/local/sbin/boundscheck"
+      - "/usr/local/boundscheck"
+      - "/bin/boundscheck"
+      - "/sbin/boundscheck"
+      - "/home/pedroborges/Code/node_modules/.bin/drmemory"
+      - "/home/pedroborges/node_modules/.bin/drmemory"
+      - "/home/node_modules/.bin/drmemory"
+      - "/node_modules/.bin/drmemory"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/drmemory"
+      - "/home/pedroborges/.local/bin/drmemory"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/drmemory"
+      - "/usr/local/sbin/drmemory"
+      - "/usr/local/bin/drmemory"
+      - "/usr/sbin/drmemory"
+      - "/usr/bin/drmemory"
+      - "/sbin/drmemory"
+      - "/bin/drmemory"
+      - "/usr/games/drmemory"
+      - "/usr/local/games/drmemory"
+      - "/snap/bin/drmemory"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/drmemory"
+      - "/usr/bin/drmemory"
+      - "/usr/sbin/drmemory"
+      - "/usr/drmemory"
+      - "/usr/local/bin/drmemory"
+      - "/usr/local/sbin/drmemory"
+      - "/usr/local/drmemory"
+      - "/bin/drmemory"
+      - "/sbin/drmemory"
+      - "/home/pedroborges/Code/node_modules/.bin/cuda-memcheck"
+      - "/home/pedroborges/node_modules/.bin/cuda-memcheck"
+      - "/home/node_modules/.bin/cuda-memcheck"
+      - "/node_modules/.bin/cuda-memcheck"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/cuda-memcheck"
+      - "/home/pedroborges/.local/bin/cuda-memcheck"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/cuda-memcheck"
+      - "/usr/local/sbin/cuda-memcheck"
+      - "/usr/local/bin/cuda-memcheck"
+      - "/usr/sbin/cuda-memcheck"
+      - "/usr/bin/cuda-memcheck"
+      - "/sbin/cuda-memcheck"
+      - "/bin/cuda-memcheck"
+      - "/usr/games/cuda-memcheck"
+      - "/usr/local/games/cuda-memcheck"
+      - "/snap/bin/cuda-memcheck"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/cuda-memcheck"
+      - "/usr/bin/cuda-memcheck"
+      - "/usr/sbin/cuda-memcheck"
+      - "/usr/cuda-memcheck"
+      - "/usr/local/bin/cuda-memcheck"
+      - "/usr/local/sbin/cuda-memcheck"
+      - "/usr/local/cuda-memcheck"
+      - "/bin/cuda-memcheck"
+      - "/sbin/cuda-memcheck"
+      - "/home/pedroborges/Code/node_modules/.bin/compute-sanitizer"
+      - "/home/pedroborges/node_modules/.bin/compute-sanitizer"
+      - "/home/node_modules/.bin/compute-sanitizer"
+      - "/node_modules/.bin/compute-sanitizer"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/compute-sanitizer"
+      - "/home/pedroborges/.local/bin/compute-sanitizer"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/compute-sanitizer"
+      - "/usr/local/sbin/compute-sanitizer"
+      - "/usr/local/bin/compute-sanitizer"
+      - "/usr/sbin/compute-sanitizer"
+      - "/usr/bin/compute-sanitizer"
+      - "/sbin/compute-sanitizer"
+      - "/bin/compute-sanitizer"
+      - "/usr/games/compute-sanitizer"
+      - "/usr/local/games/compute-sanitizer"
+      - "/snap/bin/compute-sanitizer"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/compute-sanitizer"
+      - "/usr/bin/compute-sanitizer"
+      - "/usr/sbin/compute-sanitizer"
+      - "/usr/compute-sanitizer"
+      - "/usr/local/bin/compute-sanitizer"
+      - "/usr/local/sbin/compute-sanitizer"
+      - "/usr/local/compute-sanitizer"
+      - "/bin/compute-sanitizer"
+      - "/sbin/compute-sanitizer"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr"
+        - "/usr/local"
+        - "/"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CTest.cmake:196 (find_program)"
+      - "CMakeLists.txt:37 (include)"
+    mode: "program"
+    variable: "COVERAGE_COMMAND"
+    description: "Path to the coverage program that CTest uses for performing coverage inspection"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcov"
+    candidate_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/"
+      - "/home/pedroborges/node_modules/.bin/"
+      - "/home/node_modules/.bin/"
+      - "/node_modules/.bin/"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/"
+      - "/home/pedroborges/.local/bin/"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64/"
+      - "/usr/bin/"
+      - "/usr/sbin/"
+      - "/usr/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/home/pedroborges/Code/node_modules/.bin/gcov"
+      - "/home/pedroborges/node_modules/.bin/gcov"
+      - "/home/node_modules/.bin/gcov"
+      - "/node_modules/.bin/gcov"
+      - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin/gcov"
+      - "/home/pedroborges/.local/bin/gcov"
+      - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw/gcov"
+      - "/usr/local/sbin/gcov"
+      - "/usr/local/bin/gcov"
+      - "/usr/sbin/gcov"
+    found: "/usr/bin/gcov"
+    search_context:
+      ENV{PATH}:
+        - "/home/pedroborges/Code/node_modules/.bin"
+        - "/home/pedroborges/node_modules/.bin"
+        - "/home/node_modules/.bin"
+        - "/node_modules/.bin"
+        - "/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.codex/tmp/arg0/codex-arg0f5oIfw"
+        - "/home/pedroborges/.local/bin"
+        - "/home/pedroborges/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/pedroborges/.vscode/extensions/openai.chatgpt-26.818.61809-linux-x64/bin/linux-x86_64"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr"
+        - "/usr/local"
+        - "/"
+...

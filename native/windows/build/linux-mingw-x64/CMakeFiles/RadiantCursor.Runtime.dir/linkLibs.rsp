@@ -1,0 +1,1 @@
+ -ld2d1 -ld3d11 -ldxgi -ldcomp -ldwrite -ldwmapi -luser32 -lgdi32 -lole32 -lshell32 -lshlwapi -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

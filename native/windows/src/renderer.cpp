@@ -28,6 +28,54 @@ float length(Vec2 value) { return std::hypot(value.x,value.y); }
 Vec2 normalize(Vec2 value) { const float size=length(value); return size>.001f?mul(value,1.0f/size):Vec2{1,0}; }
 Vec2 direction(float angle) { return {std::cos(angle),std::sin(angle)}; }
 
+enum class ResizeDirection { None, Horizontal, Vertical, DiagonalNwSe, DiagonalNeSw };
+
+ResizeDirection resizeDirectionForHitTest(LRESULT hitTest) {
+    switch (hitTest) {
+    case HTLEFT:
+    case HTRIGHT:
+        return ResizeDirection::Horizontal;
+    case HTTOP:
+    case HTBOTTOM:
+        return ResizeDirection::Vertical;
+    case HTTOPLEFT:
+    case HTBOTTOMRIGHT:
+        return ResizeDirection::DiagonalNwSe;
+    case HTTOPRIGHT:
+    case HTBOTTOMLEFT:
+        return ResizeDirection::DiagonalNeSw;
+    default:
+        return ResizeDirection::None;
+    }
+}
+
+struct WindowHitTestContext {
+    POINT point{};
+    DWORD runtimeProcessId=0;
+    LRESULT result=HTNOWHERE;
+};
+
+BOOL CALLBACK findWindowHitTest(HWND window,LPARAM parameter) {
+    auto &context=*reinterpret_cast<WindowHitTestContext*>(parameter);
+    if(!IsWindowVisible(window)||IsIconic(window))return TRUE;
+    DWORD processId=0;GetWindowThreadProcessId(window,&processId);
+    if(processId==context.runtimeProcessId)return TRUE;
+    const auto extendedStyle=static_cast<DWORD>(GetWindowLongPtrW(window,GWL_EXSTYLE));
+    if(extendedStyle&WS_EX_TRANSPARENT)return TRUE;
+    RECT bounds{};if(!GetWindowRect(window,&bounds)||!PtInRect(&bounds,context.point))return TRUE;
+    DWORD_PTR hitTest=HTNOWHERE;
+    const LPARAM screenPoint=MAKELPARAM(static_cast<short>(context.point.x),static_cast<short>(context.point.y));
+    if(!SendMessageTimeoutW(window,WM_NCHITTEST,0,screenPoint,SMTO_ABORTIFHUNG|SMTO_BLOCK,20,&hitTest))return TRUE;
+    if(static_cast<LRESULT>(hitTest)==HTTRANSPARENT||static_cast<LRESULT>(hitTest)==HTNOWHERE)return TRUE;
+    context.result=static_cast<LRESULT>(hitTest);return FALSE;
+}
+
+ResizeDirection nonClientResizeDirectionAt(POINT point) {
+    WindowHitTestContext context{point,GetCurrentProcessId(),HTNOWHERE};
+    EnumWindows(findWindowHitTest,reinterpret_cast<LPARAM>(&context));
+    return resizeDirectionForHitTest(context.result);
+}
+
 std::wstring wide(std::string_view input) {
     if (input.empty()) return {};
     const int count=MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,input.data(),static_cast<int>(input.size()),nullptr,0);
@@ -132,7 +180,7 @@ bool RuntimeHost::createOverlay(HMONITOR monitor,const RECT &bounds,std::wstring
 
 void RuntimeHost::destroyOverlays(){for(auto &overlay:overlays_)if(overlay->window)DestroyWindow(overlay->window);overlays_.clear();}
 
-bool RuntimeHost::reloadConfiguration(){try{configuration_=loadConfiguration(dataDirectory_);activeProgram_=configuration_.program?std::make_shared<RadiantCursorEngine::CompiledEffect>(*configuration_.program):nullptr;}catch(...){configuration_.enabled=false;activeProgram_.reset();clicks_.clear();trail_.clear();liveTrailHead_.reset();havePreviousCursor_=false;haveTrailEmissionCursor_=false;hadVisibleFrame_=true;return false;}clicks_.clear();trail_.clear();liveTrailHead_.reset();havePreviousCursor_=false;haveTrailEmissionCursor_=false;hadVisibleFrame_=true;return true;}
+bool RuntimeHost::reloadConfiguration(){try{configuration_=loadConfiguration(dataDirectory_);activeProgram_=configuration_.program?std::make_shared<RadiantCursorEngine::CompiledEffect>(*configuration_.program):nullptr;haloProgram_=configuration_.haloProgram?std::make_shared<RadiantCursorEngine::CompiledEffect>(*configuration_.haloProgram):nullptr;}catch(...){configuration_.enabled=false;activeProgram_.reset();haloProgram_.reset();clicks_.clear();trail_.clear();liveTrailHead_.reset();havePreviousCursor_=false;haveTrailEmissionCursor_=false;hadVisibleFrame_=true;return false;}clicks_.clear();trail_.clear();liveTrailHead_.reset();havePreviousCursor_=false;haveTrailEmissionCursor_=false;GetCursorPos(&cursorPosition_);haveCursorPosition_=true;hadVisibleFrame_=true;return true;}
 
 LRESULT CALLBACK RuntimeHost::windowProcedure(HWND window,UINT message,WPARAM wParam,LPARAM lParam){
     RuntimeHost *host=reinterpret_cast<RuntimeHost*>(GetWindowLongPtrW(window,GWLP_USERDATA));if(message==WM_NCCREATE){host=reinterpret_cast<RuntimeHost*>(reinterpret_cast<CREATESTRUCTW*>(lParam)->lpCreateParams);SetWindowLongPtrW(window,GWLP_USERDATA,reinterpret_cast<LONG_PTR>(host));}
@@ -156,41 +204,73 @@ void RuntimeHost::handleMouseEvent(WPARAM message,const MSLLHOOKSTRUCT &data){
 }
 
 void RuntimeHost::handleMouseMove(POINT position,std::uint64_t now){
+    cursorPosition_=position;haveCursorPosition_=true;
     if(!havePreviousCursor_){previousCursor_=position;lastTrailEmissionCursor_=position;havePreviousCursor_=true;haveTrailEmissionCursor_=true;return;}
     const Vec2 movement{float(position.x-previousCursor_.x),float(position.y-previousCursor_.y)};
     previousCursor_=position;
     if(length(movement)<.01f)return;
     const bool trailActive=configuration_.enabled&&configuration_.settings.trailEnabled&&(!configuration_.settings.trailOnlyPressed||anyButtonPressed_);
     if(!trailActive){lastTrailEmissionCursor_=position;haveTrailEmissionCursor_=true;liveTrailHead_.reset();return;}
-    const Vec2 motion=normalize(movement);constexpr int order[]{0,2,3,1};const int variant=order[trailSequence_%4];
-    const POINT origin=cursorTrailOrigin(position,movement);
+    const POINT start=haveTrailEmissionCursor_?lastTrailEmissionCursor_:previousCursor_;
+    const Vec2 accumulatedMovement{float(position.x-start.x),float(position.y-start.y)};
+    const Vec2 trailMovement=length(accumulatedMovement)>.01f?accumulatedMovement:movement;
+    const Vec2 motion=normalize(trailMovement);constexpr int order[]{0,2,3,1};const int variant=order[trailSequence_%4];
+    const POINT origin=cursorTrailOrigin(position,trailMovement);
     const TrailParticle head{{float(origin.x),float(origin.y)},motion,1.0f,variant,trailSequence_*64u,now};if(liveTrailHead_)*liveTrailHead_=head;else liveTrailHead_=std::make_unique<TrailParticle>(head);
     const auto interval=static_cast<std::uint64_t>(std::max(1,static_cast<int>(std::ceil(1000.0/configuration_.settings.trailFrequency))));
     if(now-lastTrailEmission_<interval)return;
-    const POINT start=haveTrailEmissionCursor_?lastTrailEmissionCursor_:position;
-    emitTrail(position,start,movement,now);lastTrailEmission_=now;lastTrailEmissionCursor_=position;haveTrailEmissionCursor_=true;
+    emitTrail(position,start,now);lastTrailEmission_=now;lastTrailEmissionCursor_=position;haveTrailEmissionCursor_=true;
 }
 
 POINT RuntimeHost::cursorTrailOrigin(POINT hotspotPosition,Vec2 movement){
     const float scale=displayScaleAt(hotspotPosition);
+    const Vec2 offset=currentCursorCenterOffset();
     const RadiantCursorTrail::Vector center{
-        float(hotspotPosition.x)+configuration_.settings.trailOffsetX*scale,
-        float(hotspotPosition.y)+configuration_.settings.trailOffsetY*scale,
+        float(hotspotPosition.x)+offset.x*scale,
+        float(hotspotPosition.y)+offset.y*scale,
     };
     const auto origin=RadiantCursorTrail::positionBehind(center,{movement.x,movement.y},configuration_.settings.trailDistance*scale,0);
     return{LONG(std::lround(origin.x)),LONG(std::lround(origin.y))};
 }
 
+Vec2 RuntimeHost::currentCursorCenterOffset()const{
+    const auto&s=configuration_.settings;const Vec2 fallback{s.trailOffsetX,s.trailOffsetY};CURSORINFO info{};info.cbSize=sizeof(info);if(!GetCursorInfo(&info)||!(info.flags&CURSOR_SHOWING)||!info.hCursor)return fallback;const HCURSOR cursor=info.hCursor;
+    const auto is=[cursor](LPCWSTR id){return cursor==LoadCursorW(nullptr,id);};
+    if(is(IDC_IBEAM))return s.cursorTextOffset;
+    if(is(IDC_HAND))return s.cursorLinkOffset;
+    if(is(IDC_CROSS))return s.cursorCrosshairOffset;
+    if(is(IDC_WAIT)||is(IDC_APPSTARTING))return s.cursorBusyOffset;
+    if(is(IDC_SIZEALL))return s.cursorMoveOffset;
+    if(is(IDC_NO))return s.cursorForbiddenOffset;
+    if(is(IDC_HELP))return s.cursorHelpOffset;
+    if(is(IDC_SIZEWE))return s.cursorResizeHorizontalOffset;
+    if(is(IDC_SIZENS))return s.cursorResizeVerticalOffset;
+    if(is(IDC_SIZENWSE))return s.cursorResizeDiagonalNwSeOffset;
+    if(is(IDC_SIZENESW))return s.cursorResizeDiagonalNeSwOffset;
+    // Window frames can be owned by DWM or a custom non-client area and use a
+    // cursor handle different from the shared IDC_SIZE* handles. Ask the
+    // underlying top-level window which border/corner is under the pointer.
+    switch(nonClientResizeDirectionAt(info.ptScreenPos)){
+    case ResizeDirection::Horizontal:return s.cursorResizeHorizontalOffset;
+    case ResizeDirection::Vertical:return s.cursorResizeVerticalOffset;
+    case ResizeDirection::DiagonalNwSe:return s.cursorResizeDiagonalNwSeOffset;
+    case ResizeDirection::DiagonalNeSw:return s.cursorResizeDiagonalNeSwOffset;
+    case ResizeDirection::None:break;
+    }
+    return fallback;
+}
+
 void RuntimeHost::tick(){
     const auto now=clockMs();
+    POINT sampled{};if(GetCursorPos(&sampled)){cursorPosition_=sampled;haveCursorPosition_=true;}
     clicks_.erase(std::remove_if(clicks_.begin(),clicks_.end(),[&](const ClickEvent&e){return now-e.started>static_cast<std::uint64_t>(e.lifetime);}),clicks_.end());trail_.erase(std::remove_if(trail_.begin(),trail_.end(),[&](const TrailParticle&p){return now-p.started>static_cast<std::uint64_t>(configuration_.settings.trailLifeMs);}),trail_.end());
     if(liveTrailHead_&&now-liveTrailHead_->started>static_cast<std::uint64_t>(configuration_.settings.trailLifeMs))liveTrailHead_.reset();
     if(now-lastFrame_>=15){render(now);lastFrame_=now;}
 }
 
-void RuntimeHost::emitTrail(POINT position,POINT previous,Vec2 movementDirection,std::uint64_t now){
-    const Vec2 emissionSpan{float(position.x-previous.x),float(position.y-previous.y)};const float distance=length(emissionSpan);if(distance<.01f)return;const Vec2 motion=normalize(movementDirection);const float dpiScale=displayScaleAt(position);const float spacing=(2.5f+(100-configuration_.settings.trailDensity)*.42f)*dpiScale;const int samples=std::clamp(static_cast<int>(std::floor(distance/spacing)),1,6);const int particles=2+(configuration_.settings.trailDensity-1)*4/99;constexpr int order[]{0,2,3,1};const unsigned emission=trailSequence_++;const int variant=order[emission%4];const POINT trailOrigin=cursorTrailOrigin(position,movementDirection);
-    for(int sample=1;sample<=samples;++sample){const float amount=float(sample)/samples;const float distanceBehind=distance*(1.0f-amount);for(int particle=0;particle<particles;++particle){const int index=sample*8+particle;const float spread=configuration_.settings.trailSize*dpiScale*(.18f+.82f*deterministicRandom(index,variant,1));const float lateralOffset=(deterministicRandom(index,variant,0)-.5f)*spread*.9f;const auto placed=RadiantCursorTrail::positionBehind({float(trailOrigin.x),float(trailOrigin.y)},{movementDirection.x,movementDirection.y},distanceBehind,lateralOffset);const float directionAngle=std::atan2(motion.y,motion.x)+(deterministicRandom(index,variant,2)-.5f)*.9f;trail_.push_back({{placed.x,placed.y},direction(directionAngle),.48f+.62f*deterministicRandom(index,variant,3),variant,emission*64u+unsigned(index),now});}}
+void RuntimeHost::emitTrail(POINT position,POINT previous,std::uint64_t now){
+    const Vec2 emissionSpan{float(position.x-previous.x),float(position.y-previous.y)};const float distance=length(emissionSpan);if(distance<.01f)return;const Vec2 motion=normalize(emissionSpan);const float dpiScale=displayScaleAt(position);const float spacing=(2.5f+(100-configuration_.settings.trailDensity)*.42f)*dpiScale;const int samples=std::clamp(static_cast<int>(std::floor(distance/spacing)),1,6);const int particles=2+(configuration_.settings.trailDensity-1)*4/99;constexpr int order[]{0,2,3,1};const unsigned emission=trailSequence_++;const int variant=order[emission%4];const POINT trailOrigin=cursorTrailOrigin(position,emissionSpan);
+    for(int sample=1;sample<=samples;++sample){const float amount=float(sample)/samples;const float distanceBehind=distance*(1.0f-amount);for(int particle=0;particle<particles;++particle){const int index=sample*8+particle;const float spread=configuration_.settings.trailSize*dpiScale*(.18f+.82f*deterministicRandom(index,variant,1));const float lateralOffset=(deterministicRandom(index,variant,0)-.5f)*spread*.9f;const auto placed=RadiantCursorTrail::positionBehind({float(trailOrigin.x),float(trailOrigin.y)},{emissionSpan.x,emissionSpan.y},distanceBehind,lateralOffset);const float directionAngle=std::atan2(motion.y,motion.x)+(deterministicRandom(index,variant,2)-.5f)*.9f;trail_.push_back({{placed.x,placed.y},direction(directionAngle),.48f+.62f*deterministicRandom(index,variant,3),variant,emission*64u+unsigned(index),now});}}
     if(trail_.size()>420)trail_.erase(trail_.begin(),trail_.begin()+static_cast<std::ptrdiff_t>(trail_.size()-420));
 }
 
@@ -199,17 +279,18 @@ float RuntimeHost::displayScaleAt(POINT position)const{for(const auto&overlay:ov
 bool RuntimeHost::visibleOn(const Overlay&overlay,Vec2 position,float margin)const{return position.x+margin>=overlay.bounds.left&&position.x-margin<overlay.bounds.right&&position.y+margin>=overlay.bounds.top&&position.y-margin<overlay.bounds.bottom;}
 
 void RuntimeHost::render(std::uint64_t now){
-    const bool active=configuration_.enabled&&(!clicks_.empty()||!trail_.empty()||liveTrailHead_);if(!active&&!hadVisibleFrame_)return;
+    const bool haloActive=configuration_.settings.haloEnabled||haloProgram_;const bool active=configuration_.enabled&&(!clicks_.empty()||!trail_.empty()||liveTrailHead_||haloActive);if(!active&&!hadVisibleFrame_)return;
     bool deviceLost=false;
     for(auto &holder:overlays_){
         auto &overlay=*holder;
         const float trailMargin=configuration_.settings.trailSize*5.0f*overlay.scale;
         auto particleVisible=[&](const TrailParticle&particle){return visibleOn(overlay,particle.position,trailMargin);};
         auto clickVisible=[&](const ClickEvent&event){const float logical=event.program?event.program->maximumBounds:configuration_.settings.size*2.0f;return visibleOn(overlay,{float(event.position.x),float(event.position.y)},logical*overlay.scale);};
-        const bool overlayActive=active&&(std::any_of(trail_.begin(),trail_.end(),particleVisible)||(liveTrailHead_&&particleVisible(*liveTrailHead_))||std::any_of(clicks_.begin(),clicks_.end(),clickVisible));
+        const float haloScale=haveCursorPosition_?displayScaleAt(cursorPosition_):1.0f;const Vec2 haloOffset=currentCursorCenterOffset();const Vec2 haloCenter{float(cursorPosition_.x)+haloOffset.x*haloScale,float(cursorPosition_.y)+haloOffset.y*haloScale};const float haloMargin=haloProgram_?haloProgram_->maximumBounds:configuration_.settings.haloDistance+configuration_.settings.haloSize*5.0f;const bool haloVisible=haloActive&&haveCursorPosition_&&visibleOn(overlay,haloCenter,haloMargin*haloScale);const bool overlayActive=active&&(haloVisible||std::any_of(trail_.begin(),trail_.end(),particleVisible)||(liveTrailHead_&&particleVisible(*liveTrailHead_))||std::any_of(clicks_.begin(),clicks_.end(),clickVisible));
         if(!overlayActive&&!overlay.visible)continue;
         d2dContext_->SetTarget(overlay.targetBitmap.get());d2dContext_->BeginDraw();d2dContext_->Clear(D2D1::ColorF(0,0));
         if(overlayActive){
+            if(haloVisible)drawHalo(overlay,now);
             drawingTrail_=true;
             auto drawParticle=[&](const TrailParticle&particle){if(!particleVisible(particle))return;const float progress=clamp01(float(now-particle.started)/configuration_.settings.trailLifeMs);const Vec2 particleCenter=local(overlay,particle.position);d2dContext_->SetTransform(D2D1::Matrix3x2F::Scale(D2D1::SizeF(overlay.scale,overlay.scale),D2D1::Point2F(particleCenter.x,particleCenter.y)));drawTrailPoint(overlay,particle,progress);d2dContext_->SetTransform(D2D1::Matrix3x2F::Identity());};
             for (const auto &particle : trail_) drawParticle(particle);
@@ -274,8 +355,18 @@ void RuntimeHost::drawPrism(Overlay&o,const ClickEvent&e,Color c,float p){const 
 void RuntimeHost::drawFlower(Overlay&o,const ClickEvent&e,Color c,float p){const auto&s=configuration_.settings;const Vec2 center{float(e.position.x),float(e.position.y)};const int count=std::clamp(s.count+4,6,14);const float a=eventAlpha(p),spread=s.size*easeOut(p)*.52f,rotation=p*1.4f+variantRotation(e.variant),r=std::max(3.0f,s.size*(.16f+.04f*std::sin(p*Pi)));for(int i=0;i<count;++i){const Vec2 point=add(center,mul(direction(2*Pi*i/count+rotation),spread));drawCircle(o,point,r*1.3f,alpha(c,a*.3f),1,true);drawCircle(o,point,r,alpha(c,a*.68f),1,true);}drawCircle(o,center,r*.82f,alpha(lighter(c,1.3f),a*.88f),1,true);}
 void RuntimeHost::drawMeteor(Overlay&o,const ClickEvent&e,Color c,float p){const auto&s=configuration_.settings;const Vec2 center{float(e.position.x),float(e.position.y)};const int count=std::clamp(s.count*2+4,8,24);const float r=s.size*easeOut(p),a=eventAlpha(p);for(int i=0;i<count;++i){const float angle=2*Pi*i/count+variantRotation(e.variant)+(deterministicRandom(i,e.variant,0)-.5f)*.42f,length=r*(.56f+.44f*deterministicRandom(i,e.variant,1)),base=r*.24f,width=s.size*(.045f+.015f*(i%3));const Vec2 d=direction(angle),t{-d.y,d.x};drawPolygon(o,{sub(add(center,mul(d,base)),mul(t,width)),add(center,mul(d,length)),add(add(center,mul(d,base)),mul(t,width))},alpha(c,a*(.2f+.12f*(i%3))),1,true);}drawCircle(o,center,r*.34f,alpha(c,a*.32f),1,true);drawCircle(o,center,std::max(3.0f,r*.13f),alpha(lighter(c,1.45f),a*.92f),1,true);}
 
+void RuntimeHost::drawHalo(Overlay &overlay,std::uint64_t now){
+    if(!haveCursorPosition_)return;
+    const auto &base=configuration_.settings;constexpr int order[]{0,2,3,1};const int variant=base.haloCycleVariants?order[(now/static_cast<std::uint64_t>(std::max(1,base.haloVariantIntervalMs)))%4]:0;const float cursorScale=displayScaleAt(cursorPosition_);const Vec2 cursorOffset=currentCursorCenterOffset();const Vec2 center{float(cursorPosition_.x)+cursorOffset.x*cursorScale,float(cursorPosition_.y)+cursorOffset.y*cursorScale};
+    if(haloProgram_){const int elapsed=static_cast<int>(std::fmod(double(now),double(std::max(1,haloProgram_->durationMs))));renderCommands_.clear();haloProgram_->evaluate(elapsed,center,base.haloColor,variant,renderCommands_);const Vec2 localCenter=local(overlay,center);d2dContext_->SetTransform(D2D1::Matrix3x2F::Scale(D2D1::SizeF(overlay.scale,overlay.scale),D2D1::Point2F(localCenter.x,localCenter.y)));for(const auto&command:renderCommands_)drawRenderCommand(overlay,command);d2dContext_->SetTransform(D2D1::Matrix3x2F::Identity());return;}
+    Settings saved=configuration_.settings;configuration_.settings.trailStyle=base.haloStyle;configuration_.settings.trailColor=base.haloColor;configuration_.settings.trailSize=base.haloSize;configuration_.settings.trailOpacity=base.haloOpacity;configuration_.settings.trailGlow=base.haloGlow;drawingHalo_=true;drawingTrail_=true;
+    const float rotationPhase=std::fmod(float(now)*.00055f*base.haloSpeed,1.0f),animationPhase=std::fmod(float(now)*.00055f,1.0f);int count=5+base.haloDensity*9/100;if(base.haloStyle=="orbitTrail")count=4;if(base.haloStyle=="ribbon"||base.haloStyle=="laser"||base.haloStyle=="neon"||base.haloStyle=="cometTrail")count=6;const float radius=base.haloDistance*cursorScale;
+    for(int index=0;index<count;++index){const float angle=rotationPhase*2*Pi+variantRotation(variant)+index*2*Pi/count;const Vec2 radial=direction(angle),tangent{-radial.y,radial.x};const float radialMotion=std::min(base.haloSize*.12f*cursorScale,radius*.08f);const float ring=radius*(.92f+deterministicRandom(index,variant,0)*.16f)+std::sin(animationPhase*4*Pi+index)*radialMotion;const auto serialBase=now/static_cast<std::uint64_t>(std::max(1,base.haloVariantIntervalMs))*64;TrailParticle particle{{center.x+radial.x*ring,center.y+radial.y*ring},tangent,.48f+deterministicRandom(index,variant,2)*.44f,variant,unsigned(serialBase+index),now};const Vec2 particleCenter=local(overlay,particle.position);d2dContext_->SetTransform(D2D1::Matrix3x2F::Scale(D2D1::SizeF(overlay.scale,overlay.scale),D2D1::Point2F(particleCenter.x,particleCenter.y)));drawTrailPoint(overlay,particle,animationPhase);d2dContext_->SetTransform(D2D1::Matrix3x2F::Identity());}
+    drawingTrail_=false;drawingHalo_=false;configuration_.settings=saved;
+}
+
 void RuntimeHost::drawTrailPoint(Overlay &o,const TrailParticle&p,float progress){
-    const auto&s=configuration_.settings;const float fade=(1-progress)*(1-progress),a=s.trailOpacity*fade,size=s.trailSize*p.scale*(.62f+.38f*fade);const Vec2 d=normalize(p.direction),t{-d.y,d.x};Color c=s.trailStyle=="rainbow"?hsv(std::fmod(p.serial*.047f+p.variant*.17f,1.0f),.78f,1):s.trailColor;
+    const auto&s=configuration_.settings;const float fade=drawingHalo_?1.0f:(1-progress)*(1-progress),a=s.trailOpacity*fade,size=s.trailSize*p.scale*(.62f+.38f*fade);const Vec2 d=normalize(p.direction),t{-d.y,d.x};Color c=s.trailStyle=="rainbow"?hsv(std::fmod(p.serial*.047f+p.variant*.17f,1.0f),.78f,1):s.trailColor;
     if(s.trailStyle=="soft"){drawCircle(o,p.position,size*1.5f,alpha(c,a*.12f),1,true);drawCircle(o,p.position,size*.72f,alpha(c,a*.38f),1,true);}
     else if(s.trailStyle=="neon"){const std::vector<Vec2> segment{sub(p.position,mul(d,size*2.2f)),add(p.position,mul(d,size*.2f))};drawLineSegments(o,segment,alpha(c,a*.2f),std::max(4.0f,size*.75f));drawLineSegments(o,segment,alpha(lighter(c,1.5f),a*.9f),std::max(1.0f,size*.2f));}
     else if(s.trailStyle=="cometTrail"){drawPolygon(o,{add(p.position,mul(t,size*.48f)),sub(p.position,mul(d,size*3.2f)),sub(p.position,mul(t,size*.48f))},alpha(c,a*.28f),1,true);drawCircle(o,p.position,size*.58f,alpha(lighter(c,1.4f),a*.92f),1,true);}

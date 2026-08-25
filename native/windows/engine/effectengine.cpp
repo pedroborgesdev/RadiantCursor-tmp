@@ -91,9 +91,31 @@ Settings parseSettings(const json::Value &source) {
     result.trailOpacity = clampNumber(source.at("TrailOpacity"), .72f, .05f, 1.0f);
     result.trailOffsetX = clampNumber(source.at("TrailOffsetX"), 8.0f, -128.0f, 128.0f);
     result.trailOffsetY = clampNumber(source.at("TrailOffsetY"), 8.0f, -128.0f, 128.0f);
+    result.cursorTextOffset = {clampNumber(source.at("CursorTextOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorTextOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorLinkOffset = {clampNumber(source.at("CursorLinkOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorLinkOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorCrosshairOffset = {clampNumber(source.at("CursorCrosshairOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorCrosshairOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorBusyOffset = {clampNumber(source.at("CursorBusyOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorBusyOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorMoveOffset = {clampNumber(source.at("CursorMoveOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorMoveOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorForbiddenOffset = {clampNumber(source.at("CursorForbiddenOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorForbiddenOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorHelpOffset = {clampNumber(source.at("CursorHelpOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorHelpOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorResizeHorizontalOffset = {clampNumber(source.at("CursorResizeHorizontalOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorResizeHorizontalOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorResizeVerticalOffset = {clampNumber(source.at("CursorResizeVerticalOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorResizeVerticalOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorResizeDiagonalNwSeOffset = {clampNumber(source.at("CursorResizeDiagonalNwSeOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorResizeDiagonalNwSeOffsetY"), 8.0f, -128.0f, 128.0f)};
+    result.cursorResizeDiagonalNeSwOffset = {clampNumber(source.at("CursorResizeDiagonalNeSwOffsetX"), 8.0f, -128.0f, 128.0f), clampNumber(source.at("CursorResizeDiagonalNeSwOffsetY"), 8.0f, -128.0f, 128.0f)};
     result.trailDistance = clampNumber(source.at("TrailDistance"), 0.0f, 0.0f, 128.0f);
     result.trailGlow = source.at("TrailGlow").boolean(true);
     result.trailOnlyPressed = source.at("TrailOnlyPressed").boolean(false);
+    result.haloEnabled = source.at("HaloEnabled").boolean(false);
+    result.haloStyle = text(source.at("HaloStyle"), "orbitTrail");
+    result.haloColor = color(source.at("HaloColor").string("#8bd97b"));
+    result.haloSize = clampNumber(source.at("HaloSize"), 18.0f, 1.0f, 200.0f);
+    result.haloDistance = clampNumber(source.at("HaloDistance"), 48.0f, 0.0f, 256.0f);
+    result.haloDensity = clampNumber(source.at("HaloDensity"), 55, 1, 100);
+    result.haloOpacity = clampNumber(source.at("HaloOpacity"), .82f, .05f, 1.0f);
+    result.haloSpeed = clampNumber(source.at("HaloSpeed"), 1.0f, 0.0f, 4.0f);
+    result.haloVariantIntervalMs = clampNumber(source.at("HaloVariantInterval"), 1400, 10, 5000);
+    result.haloCycleVariants = source.at("HaloCycleVariants").boolean(true);
+    result.haloGlow = source.at("HaloGlow").boolean(true);
     return result;
 }
 
@@ -333,6 +355,13 @@ RuntimeConfiguration loadConfiguration(const std::filesystem::path &dataDirector
         if (!std::regex_match(result.activeEffectId,safeId) || !std::regex_match(result.activeRevision,safeRevision)) throw std::runtime_error("unsafe active revision");
         const auto runtimePath=dataDirectory/"library"/"effects"/result.activeEffectId/"revisions"/result.activeRevision.substr(7)/"runtime.json";
         result.program=parseProgram(json::parse(readFile(runtimePath)),result.activeEffectId,result.activeRevision);
+    }
+    result.activeHaloEffectId = text(root.at("activeHaloEffectId"));
+    result.activeHaloRevision = text(root.at("activeHaloRevision"));
+    if (!result.activeHaloEffectId.empty() || !result.activeHaloRevision.empty()) {
+        if (!std::regex_match(result.activeHaloEffectId,safeId) || !std::regex_match(result.activeHaloRevision,safeRevision)) throw std::runtime_error("unsafe active halo revision");
+        const auto runtimePath=dataDirectory/"library"/"effects"/result.activeHaloEffectId/"revisions"/result.activeHaloRevision.substr(7)/"runtime.json";
+        result.haloProgram=parseProgram(json::parse(readFile(runtimePath)),result.activeHaloEffectId,result.activeHaloRevision);
     }
     return result;
 }

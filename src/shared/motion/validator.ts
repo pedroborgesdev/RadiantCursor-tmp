@@ -7,6 +7,7 @@ export function validateMotionDocument(input: unknown): ValidationResult {
   if (!input || typeof input !== "object") return { valid: false, diagnostics: [{ severity: "error", code: "document", path: "$", message: "Documento inválido." }] };
   const doc = input as Partial<EffectDocumentV2>;
   if (doc.schemaVersion !== 2) error("schema", "$.schemaVersion", "O documento deve usar o schema 2.");
+  if (doc.target !== undefined && doc.target !== "click" && doc.target !== "halo") error("target", "$.target", "O destino deve ser clique ou halo.");
   if (typeof doc.id !== "string" || !/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(doc.id)) error("id", "$.id", "ID inválido.");
   if (!finite(doc.durationMs) || doc.durationMs < 1 || doc.durationMs > MOTION_LIMITS.maxDurationMs) error("duration", "$.durationMs", "Duração total fora dos limites.");
   if (!Array.isArray(doc.rootIds) || !doc.elements || typeof doc.elements !== "object") error("hierarchy", "$.elements", "Hierarquia ausente.");
@@ -30,4 +31,3 @@ export function validateMotionDocument(input: unknown): ValidationResult {
   return { valid: !diagnostics.some((entry) => entry.severity === "error"), diagnostics, ...(diagnostics.some((entry) => entry.severity === "error") ? {} : { document: input as EffectDocumentV2 }) };
 }
 export function assertMotionDocument(input: unknown): EffectDocumentV2 { const result = validateMotionDocument(input); if (!result.valid || !result.document) throw Object.assign(new Error(result.diagnostics[0]?.message ?? "Documento inválido."), { diagnostics: result.diagnostics }); return result.document; }
-

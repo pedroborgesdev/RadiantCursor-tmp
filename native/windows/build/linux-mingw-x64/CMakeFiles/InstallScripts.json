@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/pedroborges/Code/native/windows/build/linux-mingw-x64/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

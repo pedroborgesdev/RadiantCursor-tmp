@@ -115,6 +115,8 @@ export class WindowsRuntimeAdapter implements RuntimeAdapter {
         }),
         activeEffectId: typeof raw.activeEffectId === "string" && SAFE_EFFECT_ID.test(raw.activeEffectId) ? raw.activeEffectId : null,
         activeRevision: typeof raw.activeRevision === "string" && SAFE_REVISION.test(raw.activeRevision) ? raw.activeRevision : null,
+        activeHaloEffectId: typeof raw.activeHaloEffectId === "string" && SAFE_EFFECT_ID.test(raw.activeHaloEffectId) ? raw.activeHaloEffectId : null,
+        activeHaloRevision: typeof raw.activeHaloRevision === "string" && SAFE_REVISION.test(raw.activeHaloRevision) ? raw.activeHaloRevision : null,
         updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : new Date(0).toISOString(),
       };
     } catch {
@@ -124,6 +126,8 @@ export class WindowsRuntimeAdapter implements RuntimeAdapter {
         settings: { ...DEFAULT_RADIANT_CURSOR_SETTINGS },
         activeEffectId: null,
         activeRevision: null,
+        activeHaloEffectId: null,
+        activeHaloRevision: null,
         updatedAt: new Date().toISOString(),
       };
     }
@@ -209,7 +213,7 @@ export class WindowsRuntimeAdapter implements RuntimeAdapter {
     const settings = validateRadiantCursorSettings(value);
     return this.enqueue(async () => {
       const current = await this.readStateFile();
-      await this.commitState(current, { ...current, settings, activeEffectId: null, activeRevision: null }, false, null);
+      await this.commitState(current, { ...current, settings, activeEffectId: null, activeRevision: null, activeHaloEffectId: null, activeHaloRevision: null }, false, null);
       return this.getState();
     });
   }
@@ -224,6 +228,8 @@ export class WindowsRuntimeAdapter implements RuntimeAdapter {
         settings: settings ?? current.settings,
         activeEffectId: settings ? null : current.activeEffectId,
         activeRevision: settings ? null : current.activeRevision,
+        activeHaloEffectId: settings ? null : current.activeHaloEffectId,
+        activeHaloRevision: settings ? null : current.activeHaloRevision,
       }, true, true);
       return this.getState();
     });
@@ -237,18 +243,23 @@ export class WindowsRuntimeAdapter implements RuntimeAdapter {
     });
   }
 
-  async readActiveEngineRevision(): Promise<ActiveEngineRevision> {
+  async readActiveEngineRevision(target: "click" | "halo" = "click"): Promise<ActiveEngineRevision> {
     const state = await this.readStateFile();
-    return { effectId: state.activeEffectId, revision: state.activeRevision };
+    return target === "halo"
+      ? { effectId: state.activeHaloEffectId, revision: state.activeHaloRevision }
+      : { effectId: state.activeEffectId, revision: state.activeRevision };
   }
 
-  activateEngineRevision(effectId: string, revision: string): Promise<void> {
+  activateEngineRevision(effectId: string, revision: string, target: "click" | "halo" = "click"): Promise<void> {
     if (!SAFE_EFFECT_ID.test(effectId) || !SAFE_REVISION.test(revision) || basename(effectId) !== effectId) {
       throw new WindowsIntegrationError("Efeito ou revisão declarativa inválida.");
     }
     return this.enqueue(async () => {
       const current = await this.readStateFile();
-      await this.commitState(current, { ...current, enabled: true, activeEffectId: effectId, activeRevision: revision }, true, true);
+      const next = target === "halo"
+        ? { ...current, enabled: true, activeHaloEffectId: effectId, activeHaloRevision: revision }
+        : { ...current, enabled: true, activeEffectId: effectId, activeRevision: revision };
+      await this.commitState(current, next, true, true);
     });
   }
 }

@@ -16,6 +16,7 @@
 .project-popover { position:absolute; z-index:30; top:48px; left:50%; width:340px; translate:-50%; overflow:hidden; border:1px solid #ffffff17; border-radius:12px; background:#111214f7; box-shadow:0 22px 60px #000b; backdrop-filter:blur(18px); }
 .popover-head { display:flex; align-items:center; justify-content:space-between; padding:13px 14px; border-bottom:1px solid #ffffff0f; }
 .popover-head strong { font-size:11px; }
+.popover-head > span { display:flex; gap:5px; }
 .popover-head button { display:flex; height:30px; align-items:center; gap:5px; border:1px solid #2bceff2e; border-radius:7px; padding:0 8px; color:#7ee3ff; background:#2bceff0b; font-size:8px; }
 .project-popover > div:nth-child(2) { max-height:260px; overflow:auto; padding:7px; }
 .project-popover > div:nth-child(2) > button { display:grid; grid-template-columns:34px 1fr 18px; width:100%; align-items:center; gap:9px; border:0; border-radius:8px; padding:7px; color:#71717a; text-align:left; background:transparent; }
@@ -26,6 +27,8 @@
 .project-popover > label { display:grid; grid-template-columns:1fr 110px; align-items:center; padding:12px 14px; border-top:1px solid #ffffff0f; color:#71717a; font-size:8px; }
 .project-popover > label > div { position:relative; display:flex; height:31px; border:1px solid #ffffff12; border-radius:7px; background:#090a0b; }
 .project-popover > label input { width:100%; border:0; padding:0 30px 0 7px; color:#b6b6bd; background:transparent; font-size:8px; }
+.project-popover > label select { width:100%; appearance:none; border:0; outline:0; padding:0 7px; color:#b6b6bd; background:#090a0b; font-size:8px; }
+.project-popover > label select option { color:#d4d4d8; background:#111214; }
 .project-popover > label .project-name-field input { padding-right:7px; }
 .project-popover > label span { position:absolute; right:7px; align-self:center; color:#4f4f57; font-size:7px; }
 .studio-ux .studio-actions { gap:7px; -webkit-app-region:no-drag; }

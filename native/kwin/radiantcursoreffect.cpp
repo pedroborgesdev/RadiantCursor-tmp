@@ -5,6 +5,8 @@
 
 #include "core/rendertarget.h"
 #include "core/renderviewport.h"
+#include "cursor.h"
+#include "cursorsource.h"
 #include "effect/effecthandler.h"
 #include "opengl/glshader.h"
 #include "opengl/glshadermanager.h"
@@ -14,6 +16,7 @@
 #include <KConfigGroup>
 
 #include <QFontMetrics>
+#include <QCursor>
 #include <QImage>
 #include <QMatrix4x4>
 #include <QPainter>
@@ -21,6 +24,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <initializer_list>
 #include <numbers>
 
 #include <epoxy/gl.h>
@@ -61,6 +65,16 @@ float layoutRotation(int variant)
     static constexpr float rotations[] = {0.0f, 0.73f, 1.91f, 3.28f};
     return rotations[std::clamp(variant, 0, 3)];
 }
+
+bool cursorShapeMatches(const QByteArray &shape, std::initializer_list<const char *> names)
+{
+    for (const char *name : names) {
+        if (shape == name || shape.contains(name)) {
+            return true;
+        }
+    }
+    return false;
+}
 }
 
 RadiantCursorEffect::RadiantCursorEffect()
@@ -98,7 +112,33 @@ void RadiantCursorEffect::reconfigure(ReconfigureFlags)
     m_cursorCenterOffset = QPointF(
         std::clamp(config.readEntry("TrailOffsetX", 8.0), -128.0, 128.0),
         std::clamp(config.readEntry("TrailOffsetY", 8.0), -128.0, 128.0));
+    const auto readCursorOffset = [&config](const char *xKey, const char *yKey) {
+        return QPointF(
+            std::clamp(config.readEntry(QString::fromLatin1(xKey), 8.0), -128.0, 128.0),
+            std::clamp(config.readEntry(QString::fromLatin1(yKey), 8.0), -128.0, 128.0));
+    };
+    m_cursorTextOffset = readCursorOffset("CursorTextOffsetX", "CursorTextOffsetY");
+    m_cursorLinkOffset = readCursorOffset("CursorLinkOffsetX", "CursorLinkOffsetY");
+    m_cursorCrosshairOffset = readCursorOffset("CursorCrosshairOffsetX", "CursorCrosshairOffsetY");
+    m_cursorBusyOffset = readCursorOffset("CursorBusyOffsetX", "CursorBusyOffsetY");
+    m_cursorMoveOffset = readCursorOffset("CursorMoveOffsetX", "CursorMoveOffsetY");
+    m_cursorForbiddenOffset = readCursorOffset("CursorForbiddenOffsetX", "CursorForbiddenOffsetY");
+    m_cursorHelpOffset = readCursorOffset("CursorHelpOffsetX", "CursorHelpOffsetY");
+    m_cursorResizeHorizontalOffset = readCursorOffset("CursorResizeHorizontalOffsetX", "CursorResizeHorizontalOffsetY");
+    m_cursorResizeVerticalOffset = readCursorOffset("CursorResizeVerticalOffsetX", "CursorResizeVerticalOffsetY");
+    m_cursorResizeDiagonalNwSeOffset = readCursorOffset("CursorResizeDiagonalNwSeOffsetX", "CursorResizeDiagonalNwSeOffsetY");
+    m_cursorResizeDiagonalNeSwOffset = readCursorOffset("CursorResizeDiagonalNeSwOffsetX", "CursorResizeDiagonalNeSwOffsetY");
     m_trailDistance = std::clamp(config.readEntry("TrailDistance", 0.0), 0.0, 128.0);
+    m_haloEnabled = config.readEntry("HaloEnabled", false);
+    m_haloGlow = config.readEntry("HaloGlow", true);
+    m_haloCycleVariants = config.readEntry("HaloCycleVariants", true);
+    m_haloColor = config.readEntry("HaloColor", QColor(QStringLiteral("#8bd97b")));
+    m_haloSize = std::clamp(config.readEntry("HaloSize", 18.0), 1.0, 200.0);
+    m_haloDistance = std::clamp(config.readEntry("HaloDistance", 48.0), 0.0, 256.0);
+    m_haloDensity = std::clamp(config.readEntry("HaloDensity", 55), 1, 100);
+    m_haloOpacity = std::clamp(config.readEntry("HaloOpacity", 0.82), 0.05, 1.0);
+    m_haloSpeed = std::clamp(config.readEntry("HaloSpeed", 1.0), 0.0, 4.0);
+    m_haloVariantInterval = std::clamp(config.readEntry("HaloVariantInterval", 1400), 10, 5000);
     m_font = config.readEntry("Font", QFont(QStringLiteral("Noto Sans"), 10));
 
     const QString style = config.readEntry("Style", QStringLiteral("ripple")).toLower();
@@ -127,6 +167,8 @@ void RadiantCursorEffect::reconfigure(ReconfigureFlags)
         QStringLiteral("orbitTrail"), QStringLiteral("rainbow"),
     };
     m_trailStyle = validTrailStyles.contains(trailStyle) ? trailStyle : QStringLiteral("dots");
+    const QString haloStyle = config.readEntry("HaloStyle", QStringLiteral("orbitTrail"));
+    m_haloStyle = validTrailStyles.contains(haloStyle) ? haloStyle : QStringLiteral("orbitTrail");
 
     const QString trigger = config.readEntry("Trigger", QStringLiteral("press")).toLower();
     if (trigger == QLatin1String("release")) {
@@ -136,6 +178,18 @@ void RadiantCursorEffect::reconfigure(ReconfigureFlags)
     } else {
         m_trigger = Trigger::Press;
     }
+
+    const QString activeHaloEffectId = config.readEntry("ActiveHaloEffectId", QString());
+    const QString activeHaloRevision = config.readEntry("ActiveHaloRevision", QString());
+    m_haloProgram.reset();
+    if (!activeHaloEffectId.isEmpty() && !activeHaloRevision.isEmpty()) {
+        RadiantCursorEngine::LoadResult loaded = RadiantCursorEngine::EffectLoader::load(activeHaloEffectId, activeHaloRevision);
+        if (loaded.effect) {
+            m_haloProgram = std::move(loaded.effect);
+        }
+    }
+
+    m_cursorPosition = QCursor::pos();
 
     const QString activeEffectId = config.readEntry("ActiveEffectId", QString());
     const QString activeRevision = config.readEntry("ActiveRevision", QString());
@@ -152,6 +206,7 @@ void RadiantCursorEffect::reconfigure(ReconfigureFlags)
 
     m_trailPoints.clear();
     m_lastTrailEmission = -1000;
+    m_hasLastTrailEmissionPosition = false;
     m_previousDamage = Region();
     effects->addRepaintFull();
 }
@@ -175,7 +230,7 @@ void RadiantCursorEffect::prePaintScreen(ScreenPrePaintData &data, std::chrono::
         m_trailPoints.pop_front();
         removedTrailPoints = true;
     }
-    m_lastPresentTime = (m_events.empty() && m_trailPoints.empty())
+    m_lastPresentTime = (m_events.empty() && m_trailPoints.empty() && !m_haloEnabled && !m_haloProgram)
         ? std::chrono::milliseconds::zero() : presentTime;
     effects->prePaintScreen(data, presentTime);
     if (removedEvents || removedTrailPoints) {
@@ -189,7 +244,7 @@ void RadiantCursorEffect::prePaintScreen(ScreenPrePaintData &data, std::chrono::
 void RadiantCursorEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewport &viewport, int mask, const Region &deviceRegion, LogicalOutput *screen)
 {
     effects->paintScreen(renderTarget, viewport, mask, deviceRegion, screen);
-    if (m_events.empty() && m_trailPoints.empty()) {
+    if (m_events.empty() && m_trailPoints.empty() && !m_haloEnabled && !m_haloProgram) {
         return;
     }
 
@@ -201,6 +256,7 @@ void RadiantCursorEffect::paintScreen(const RenderTarget &renderTarget, const Re
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    drawHalo(renderTarget, viewport);
     m_drawingTrail = true;
     for (const TrailPoint &point : m_trailPoints) {
         drawTrailPoint(point, viewport);
@@ -242,60 +298,123 @@ void RadiantCursorEffect::postPaintScreen()
 
 bool RadiantCursorEffect::isActive() const
 {
-    return !m_events.empty() || !m_trailPoints.empty();
+    return !m_events.empty() || !m_trailPoints.empty() || m_haloEnabled || bool(m_haloProgram);
+}
+
+QPointF RadiantCursorEffect::currentCursorCenterOffset() const
+{
+    const Cursors *cursors = Cursors::self();
+    const Cursor *cursor = cursors ? cursors->mouse() : nullptr;
+    const ShapeCursorSource *shapeSource = cursor
+        ? qobject_cast<ShapeCursorSource *>(cursor->source())
+        : nullptr;
+    if (!shapeSource) {
+        return m_cursorCenterOffset;
+    }
+
+    QByteArray shape = shapeSource->shape().toLower();
+    shape.replace('_', '-');
+    if (cursorShapeMatches(shape, {"nwse-resize", "nw-resize", "se-resize", "size-fdiag", "top-left-corner", "bottom-right-corner"})) {
+        return m_cursorResizeDiagonalNwSeOffset;
+    }
+    if (cursorShapeMatches(shape, {"nesw-resize", "ne-resize", "sw-resize", "size-bdiag", "top-right-corner", "bottom-left-corner"})) {
+        return m_cursorResizeDiagonalNeSwOffset;
+    }
+    if (cursorShapeMatches(shape, {"ew-resize", "e-resize", "w-resize", "col-resize", "size-hor", "split-h", "left-side", "right-side"})) {
+        return m_cursorResizeHorizontalOffset;
+    }
+    if (cursorShapeMatches(shape, {"ns-resize", "n-resize", "s-resize", "row-resize", "size-ver", "split-v", "top-side", "bottom-side"})) {
+        return m_cursorResizeVerticalOffset;
+    }
+    if (cursorShapeMatches(shape, {"vertical-text", "text", "xterm", "ibeam"})) {
+        return m_cursorTextOffset;
+    }
+    if (cursorShapeMatches(shape, {"pointer", "pointing-hand", "hand2", "link"})) {
+        return m_cursorLinkOffset;
+    }
+    if (cursorShapeMatches(shape, {"crosshair", "cross", "cell"})) {
+        return m_cursorCrosshairOffset;
+    }
+    if (cursorShapeMatches(shape, {"progress", "wait", "watch", "left-ptr-watch"})) {
+        return m_cursorBusyOffset;
+    }
+    if (cursorShapeMatches(shape, {"all-scroll", "size-all", "move", "fleur", "grab", "grabbing"})) {
+        return m_cursorMoveOffset;
+    }
+    if (cursorShapeMatches(shape, {"not-allowed", "no-drop", "forbidden", "crossed-circle", "pirate"})) {
+        return m_cursorForbiddenOffset;
+    }
+    if (cursorShapeMatches(shape, {"help", "question", "whats-this"})) {
+        return m_cursorHelpOffset;
+    }
+    return m_cursorCenterOffset;
 }
 
 void RadiantCursorEffect::handleMouseChanged(const QPointF &position, const QPointF &oldPosition,
                                        Qt::MouseButtons buttons, Qt::MouseButtons oldButtons,
                                        Qt::KeyboardModifiers, Qt::KeyboardModifiers)
 {
-    const QVector2D movement(position - oldPosition);
-    const float distance = movement.length();
+    m_cursorPosition = position;
+    if (!m_hasLastTrailEmissionPosition) {
+        m_lastTrailEmissionPosition = oldPosition;
+        m_hasLastTrailEmissionPosition = true;
+    }
+
     const qint64 now = m_trailEmissionTimer.elapsed();
     const qint64 minimumInterval = std::max<qint64>(
         1, qint64(std::ceil(1000.0 / double(m_trailFrequency))));
     const bool frequencyAllowsEmission = now - m_lastTrailEmission >= minimumInterval;
-    if (m_trailEnabled && frequencyAllowsEmission &&
-        (!m_trailOnlyPressed || buttons != Qt::NoButton) && distance > 0.01f) {
-        m_lastTrailEmission = now;
-        const float spacing = 2.5f + (100 - m_trailDensity) * 0.42f;
-        const int samples = std::clamp(int(std::floor(distance / spacing)), 1, 6);
-        const QVector2D movementDirection = movement.normalized();
-        const float movementAngle = std::atan2(movementDirection.y(), movementDirection.x());
-        const int particlesPerSample = 2 + ((m_trailDensity - 1) * 4 / 99);
-        static constexpr int variantOrder[] = {0, 2, 3, 1};
-        const unsigned int emissionSerial = m_trailSequence++;
-        const int variant = variantOrder[emissionSerial % 4];
-        for (int sample = 1; sample <= samples; ++sample) {
-            const float amount = float(sample) / float(samples);
-            for (int particle = 0; particle < particlesPerSample; ++particle) {
-                const int particleIndex = sample * 8 + particle;
-                const float spread = m_trailSize
-                    * (0.18f + 0.82f * layoutValue(particleIndex, variant, 1));
-                const float distanceBehind = distance * (1.0f - amount);
-                const float lateralOffset =
-                    (layoutValue(particleIndex, variant, 0) - 0.5f) * spread * 0.9f;
-                const auto placed = RadiantCursorTrail::positionBehind(
-                    {float(position.x() + m_cursorCenterOffset.x()),
-                     float(position.y() + m_cursorCenterOffset.y())},
-                    {movement.x(), movement.y()},
-                    m_trailDistance + distanceBehind,
-                    lateralOffset);
-                const QPointF particlePosition(placed.x, placed.y);
-                const float directionAngle = movementAngle
-                    + (layoutValue(particleIndex, variant, 2) - 0.5f) * 0.9f;
-                const QVector2D particleDirection(std::cos(directionAngle), std::sin(directionAngle));
-                const float particleScale = 0.48f
-                    + 0.62f * layoutValue(particleIndex, variant, 3);
-                const unsigned int particleSerial = emissionSerial * 64U + unsigned(particleIndex);
-                m_trailPoints.push_back(TrailPoint{
-                    particlePosition, particleDirection, particleScale,
-                    0, variant, particleSerial,
-                });
+    const bool trailActive = m_trailEnabled
+        && (!m_trailOnlyPressed || buttons != Qt::NoButton);
+
+    if (!trailActive) {
+        m_lastTrailEmissionPosition = position;
+    } else {
+        const QVector2D movement(position - m_lastTrailEmissionPosition);
+        const float distance = movement.length();
+        if (frequencyAllowsEmission && distance > 0.01f) {
+            m_lastTrailEmission = now;
+            m_lastTrailEmissionPosition = position;
+            const float spacing = 2.5f + (100 - m_trailDensity) * 0.42f;
+            const int samples = std::clamp(int(std::floor(distance / spacing)), 1, 6);
+            const QVector2D movementDirection = movement.normalized();
+            const float movementAngle = std::atan2(movementDirection.y(), movementDirection.x());
+            const int particlesPerSample = 2 + ((m_trailDensity - 1) * 4 / 99);
+            static constexpr int variantOrder[] = {0, 2, 3, 1};
+            const unsigned int emissionSerial = m_trailSequence++;
+            const int variant = variantOrder[emissionSerial % 4];
+            const QPointF cursorCenterOffset = currentCursorCenterOffset();
+            for (int sample = 1; sample <= samples; ++sample) {
+                const float amount = float(sample) / float(samples);
+                for (int particle = 0; particle < particlesPerSample; ++particle) {
+                    const int particleIndex = sample * 8 + particle;
+                    const float spread = m_trailSize
+                        * (0.18f + 0.82f * layoutValue(particleIndex, variant, 1));
+                    const float distanceBehind = distance * (1.0f - amount);
+                    const float lateralOffset =
+                        (layoutValue(particleIndex, variant, 0) - 0.5f) * spread * 0.9f;
+                    const auto placed = RadiantCursorTrail::positionBehind(
+                        {float(position.x() + cursorCenterOffset.x()),
+                         float(position.y() + cursorCenterOffset.y())},
+                        {movement.x(), movement.y()},
+                        m_trailDistance + distanceBehind,
+                        lateralOffset);
+                    const QPointF particlePosition(placed.x, placed.y);
+                    const float directionAngle = movementAngle
+                        + (layoutValue(particleIndex, variant, 2) - 0.5f) * 0.9f;
+                    const QVector2D particleDirection(std::cos(directionAngle), std::sin(directionAngle));
+                    const float particleScale = 0.48f
+                        + 0.62f * layoutValue(particleIndex, variant, 3);
+                    const unsigned int particleSerial = emissionSerial * 64U + unsigned(particleIndex);
+                    m_trailPoints.push_back(TrailPoint{
+                        particlePosition, particleDirection, particleScale,
+                        0, variant, particleSerial,
+                    });
+                }
             }
-        }
-        while (m_trailPoints.size() > 420) {
-            m_trailPoints.pop_front();
+            while (m_trailPoints.size() > 420) {
+                m_trailPoints.pop_front();
+            }
         }
     }
 
@@ -321,10 +440,82 @@ void RadiantCursorEffect::handleMouseChanged(const QPointF &position, const QPoi
     repaintEvents();
 }
 
+void RadiantCursorEffect::drawHalo(const RenderTarget &renderTarget, const RenderViewport &viewport)
+{
+    if (!m_haloEnabled && !m_haloProgram) {
+        return;
+    }
+
+    static constexpr int variantOrder[] = {0, 2, 3, 1};
+    const qint64 now = m_trailEmissionTimer.elapsed();
+    const int variant = m_haloCycleVariants
+        ? variantOrder[(now / m_haloVariantInterval) % 4]
+        : 0;
+    const QPointF center = m_cursorPosition + currentCursorCenterOffset();
+
+    if (m_haloProgram) {
+        ClickEvent event;
+        event.position = center;
+        event.variant = variant;
+        event.lifetime = m_haloProgram->durationMs;
+        event.elapsed = int(std::fmod(double(now), double(std::max(1, event.lifetime))));
+        event.program = m_haloProgram;
+        drawDeclarativeEvent(event, renderTarget, viewport);
+        return;
+    }
+
+    const QString savedStyle = m_trailStyle;
+    const QColor savedColor = m_trailColor;
+    const float savedSize = m_trailSize;
+    const float savedOpacity = m_trailOpacity;
+    const bool savedGlow = m_trailGlow;
+    m_trailStyle = m_haloStyle;
+    m_trailColor = m_haloColor;
+    m_trailSize = m_haloSize;
+    m_trailOpacity = m_haloOpacity;
+    m_trailGlow = m_haloGlow;
+    m_drawingHalo = true;
+    m_drawingTrail = true;
+
+    const float rotationPhase = std::fmod(float(now) * 0.00055f * m_haloSpeed, 1.0f);
+    const float animationPhase = std::fmod(float(now) * 0.00055f, 1.0f);
+    int count = 5 + m_haloDensity * 9 / 100;
+    if (m_haloStyle == QLatin1String("orbitTrail")) count = 4;
+    if (m_haloStyle == QLatin1String("ribbon") || m_haloStyle == QLatin1String("laser")
+        || m_haloStyle == QLatin1String("neon") || m_haloStyle == QLatin1String("cometTrail")) count = 6;
+    const float baseRadius = m_haloDistance;
+    for (int index = 0; index < count; ++index) {
+        const float randomRadius = 0.92f + layoutValue(index, variant, 0) * 0.16f;
+        const float angle = rotationPhase * 2.0f * std::numbers::pi_v<float>
+            + layoutRotation(variant) + index * 2.0f * std::numbers::pi_v<float> / count;
+        const QVector2D radial(std::cos(angle), std::sin(angle));
+        const QVector2D tangent(-radial.y(), radial.x());
+        const float radialMotion = std::min(m_haloSize * 0.12f, baseRadius * 0.08f);
+        const float ring = baseRadius * randomRadius
+            + std::sin(animationPhase * 2.0f * std::numbers::pi_v<float> * 2.0f + index) * radialMotion;
+        TrailPoint point;
+        point.position = center + radial.toPointF() * ring;
+        point.direction = tangent;
+        point.scale = 0.48f + layoutValue(index, variant, 2) * 0.44f;
+        point.elapsed = int(animationPhase * m_trailLife);
+        point.variant = variant;
+        point.serial = unsigned((now / std::max(1, m_haloVariantInterval)) * 64 + index);
+        drawTrailPoint(point, viewport);
+    }
+
+    m_drawingTrail = false;
+    m_drawingHalo = false;
+    m_trailStyle = savedStyle;
+    m_trailColor = savedColor;
+    m_trailSize = savedSize;
+    m_trailOpacity = savedOpacity;
+    m_trailGlow = savedGlow;
+}
+
 void RadiantCursorEffect::drawTrailPoint(const TrailPoint &point, const RenderViewport &viewport)
 {
     const float progress = clamp01(float(point.elapsed) / float(m_trailLife));
-    const float fade = (1.0f - progress) * (1.0f - progress);
+    const float fade = m_drawingHalo ? 1.0f : (1.0f - progress) * (1.0f - progress);
     const float alpha = m_trailOpacity * fade;
     const float size = m_trailSize * point.scale * (0.62f + 0.38f * fade);
     const QVector2D center(point.position);
@@ -1232,6 +1423,14 @@ void RadiantCursorEffect::repaintEvents()
         currentDamage += QRect(int(point.position.x()) - trailRadius,
                                int(point.position.y()) - trailRadius,
                                trailRadius * 2, trailRadius * 2);
+    }
+    if (m_haloEnabled || m_haloProgram) {
+        const int haloRadius = m_haloProgram
+            ? int(std::ceil(m_haloProgram->maximumBounds)) * 2
+            : int(std::ceil(m_haloDistance + m_haloSize * 5.0f)) + 48;
+        const QPointF center = m_cursorPosition + currentCursorCenterOffset();
+        currentDamage += QRect(int(center.x()) - haloRadius, int(center.y()) - haloRadius,
+                               haloRadius * 2, haloRadius * 2);
     }
 
     Region dirty = m_previousDamage;

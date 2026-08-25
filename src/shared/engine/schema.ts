@@ -213,6 +213,8 @@ export interface RuntimeStatus {
   engineVersion: number;
   activeEffectId: string | null;
   activeRevision: string | null;
+  activeHaloEffectId?: string | null;
+  activeHaloRevision?: string | null;
   lastKnownGoodRevision: string | null;
   diagnostics: EngineDiagnostic[];
   capabilities: readonly string[];

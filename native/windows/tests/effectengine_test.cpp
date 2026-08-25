@@ -29,7 +29,12 @@ int main() {
     const auto behindRight = RadiantCursorTrail::positionBehind({50,50},{10,0},20,0);
     assert(behindRight.x == 30 && behindRight.y == 50);
     const auto behindDiagonal = RadiantCursorTrail::positionBehind({50,50},{10,-10},20,0);
-    assert(behindDiagonal.x < 50 && behindDiagonal.y > 50);
+    const float diagonalComponent = 20.0f / std::sqrt(2.0f);
+    assert(std::abs(behindDiagonal.x - (50.0f - diagonalComponent)) < .001f);
+    assert(std::abs(behindDiagonal.y - (50.0f + diagonalComponent)) < .001f);
+    const auto diagonalWithLateral = RadiantCursorTrail::positionBehind({50,50},{3,4},10,5);
+    assert(std::abs(diagonalWithLateral.x - 40.0f) < .001f);
+    assert(std::abs(diagonalWithLateral.y - 45.0f) < .001f);
 
     const auto parsed = rc::json::parse(R"({"text":"ok","items":[1,true,null]})");
     assert(parsed.at("text").string() == "ok");
@@ -43,7 +48,7 @@ int main() {
     const std::string revision(64, 'a');
     write(root / "runtime" / "state.json", R"({
       "schemaVersion":1,"enabled":true,"activeEffectId":"fixture","activeRevision":"sha256:)" + revision + R"(",
-      "settings":{"ClickEnabled":true,"Color1":"#ff0000","Color2":"#00ff00","Color3":"#0000ff","LineWidth":2,"RingLife":500,"RingSize":50,"RingCount":3,"ShowText":false,"Font":"Segoe UI","Style":"ripple","Trigger":"press","Glow":true,"TrailEnabled":false,"TrailStyle":"dots","TrailColor":"#ffffff","TrailSize":12,"TrailLife":500,"TrailDensity":50,"TrailFrequency":30,"TrailOpacity":0.7,"TrailOffsetX":-6,"TrailOffsetY":11,"TrailDistance":9,"TrailGlow":true,"TrailOnlyPressed":false}
+      "settings":{"ClickEnabled":true,"Color1":"#ff0000","Color2":"#00ff00","Color3":"#0000ff","LineWidth":2,"RingLife":500,"RingSize":50,"RingCount":3,"ShowText":false,"Font":"Segoe UI","Style":"ripple","Trigger":"press","Glow":true,"TrailEnabled":false,"TrailStyle":"dots","TrailColor":"#ffffff","TrailSize":12,"TrailLife":500,"TrailDensity":50,"TrailFrequency":30,"TrailOpacity":0.7,"TrailOffsetX":-6,"TrailOffsetY":11,"CursorTextOffsetX":-3,"CursorTextOffsetY":19,"CursorResizeDiagonalNwSeOffsetX":22,"CursorResizeDiagonalNwSeOffsetY":-4,"TrailDistance":9,"TrailGlow":true,"TrailOnlyPressed":false,"HaloEnabled":true,"HaloStyle":"stars","HaloColor":"#8bd97b","HaloSize":18,"HaloDistance":72,"HaloDensity":55,"HaloOpacity":0.82,"HaloSpeed":0,"HaloVariantInterval":10,"HaloCycleVariants":true,"HaloGlow":true}
     })");
     write(root / "library" / "effects" / "fixture" / "revisions" / revision / "runtime.json", R"({
       "runtimeVersion":1,"compilerVersion":1,"effectId":"fixture","revision":"sha256:)" + revision + R"(","durationMs":500,"maxRadius":100,
@@ -56,7 +61,13 @@ int main() {
     const auto configuration = rc::loadConfiguration(root);
     assert(configuration.enabled && configuration.program.has_value());
     assert(configuration.settings.trailOffsetX == -6 && configuration.settings.trailOffsetY == 11);
+    assert(configuration.settings.cursorTextOffset.x == -3 && configuration.settings.cursorTextOffset.y == 19);
+    assert(configuration.settings.cursorResizeDiagonalNwSeOffset.x == 22 && configuration.settings.cursorResizeDiagonalNwSeOffset.y == -4);
     assert(configuration.settings.trailDistance == 9);
+    assert(configuration.settings.haloEnabled && configuration.settings.haloStyle == "stars");
+    assert(configuration.settings.haloDistance == 72);
+    assert(configuration.settings.haloSpeed == 0);
+    assert(configuration.settings.haloVariantIntervalMs == 10);
     std::vector<rc::RadiantCursorEngine::RenderCommand> middle;
     configuration.program->evaluate(250, {100, 200}, configuration.settings.colors[0], 0, middle);
     assert(middle.size() == 2);

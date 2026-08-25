@@ -44,6 +44,5 @@ export function compileEffect(document: EffectDocumentV2): RuntimeDefinition {
     return { id: element.id, name: element.name, kind: element.type, parentIndex: parentId ? index.get(parentId) ?? -1 : -1, subtreeEnd, visible: element.visible, startMs: element.timing.startMs, durationMs: element.timing.durationMs, transform: element.transform, opacity: element.opacity, channels, ...(element.type === "shape" ? { shape: element.shape, appearance: element.appearance } : {}) };
   });
   let maxRadius = 1; for (const { element } of flat) maxRadius = Math.max(maxRadius, Math.hypot(element.transform.position[0], element.transform.position[1]) + Math.hypot(element.transform.size[0], element.transform.size[1]) * Math.max(...element.transform.scale));
-  return { runtimeVersion: 1, compilerVersion: 1, effectId: document.id, durationMs: document.durationMs, maxRadius: Math.ceil(maxRadius), nodes };
+  return { runtimeVersion: 1, compilerVersion: 1, effectId: document.id, target: document.target ?? "click", durationMs: document.durationMs, maxRadius: Math.ceil(maxRadius), nodes };
 }
-

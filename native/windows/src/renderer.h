@@ -63,7 +63,8 @@ private:
     void handleMouseMove(POINT position, std::uint64_t now);
     POINT cursorTrailOrigin(POINT hotspotPosition, Vec2 movement);
     void tick();
-    void emitTrail(POINT position, POINT previous, Vec2 movementDirection, std::uint64_t now);
+    void emitTrail(POINT position, POINT previous, std::uint64_t now);
+    Vec2 currentCursorCenterOffset() const;
     void render(std::uint64_t now);
     void drawEvent(Overlay &overlay, const ClickEvent &event, float progress);
     void drawRipple(Overlay &overlay, const ClickEvent &event, Color color, float progress);
@@ -95,6 +96,7 @@ private:
     void drawFlower(Overlay &overlay, const ClickEvent &event, Color color, float progress);
     void drawMeteor(Overlay &overlay, const ClickEvent &event, Color color, float progress);
     void drawTrailPoint(Overlay &overlay, const TrailParticle &point, float progress);
+    void drawHalo(Overlay &overlay, std::uint64_t now);
     void drawDeclarative(Overlay &overlay, const ClickEvent &event, int elapsed);
     void drawCircle(Overlay &overlay, Vec2 center, float radius, Color color, float width, bool filled, bool glow = false);
     void drawPolygon(Overlay &overlay, const std::vector<Vec2> &points, Color color, float width, bool filled, bool closed = true);
@@ -109,6 +111,7 @@ private:
     std::filesystem::path dataDirectory_;
     RuntimeConfiguration configuration_;
     std::shared_ptr<const RadiantCursorEngine::CompiledEffect> activeProgram_;
+    std::shared_ptr<const RadiantCursorEngine::CompiledEffect> haloProgram_;
     HWND controlWindow_ = nullptr;
     HHOOK mouseHook_ = nullptr;
     std::vector<std::unique_ptr<Overlay>> overlays_;
@@ -122,6 +125,9 @@ private:
     bool haveTrailEmissionCursor_ = false;
     bool anyButtonPressed_ = false;
     bool drawingTrail_ = false;
+    bool drawingHalo_ = false;
+    POINT cursorPosition_{};
+    bool haveCursorPosition_ = false;
     bool hadVisibleFrame_ = false;
     unsigned eventSequence_ = 0;
     unsigned trailSequence_ = 0;

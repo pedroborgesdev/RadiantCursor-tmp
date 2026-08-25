@@ -24,6 +24,20 @@ test("composições nativas respeitam o schema motion v2", () => {
   }
 });
 
+test("projetos de halo compilam e publicam com destino independente", async () => {
+  const effect = createBlankMotionEffect("Halo de teste", "halo"); effect.id = "halo-fixture";
+  const runtime = compileEffect(effect);
+  assert.equal(runtime.target, "halo");
+  assert.ok(runtime.nodes.length > 0);
+  const temporary = await mkdtemp(join(tmpdir(), "radiantcursor-halo-"));
+  try {
+    const repository = new EffectRepository(temporary);
+    const deployed = await repository.deployEffect(effect);
+    assert.equal(deployed.target, "halo");
+    assert.equal((await repository.loadEffect(effect.id)).target, "halo");
+  } finally { await rm(temporary, { recursive: true, force: true }); }
+});
+
 test("hierarquia é normalizada, detecta ciclos e respeita o limite", () => {
   const effect = createBlankMotionEffect();
   const group: GroupElementDocument = { id: "group", type: "group", name: "Grupo", visible: true, locked: false, timing: { startMs: 0, durationMs: 500 }, transform: { ...DEFAULT_TRANSFORM, size: [1, 1] }, opacity: 1, animations: [], children: [effect.rootIds[0]!] };

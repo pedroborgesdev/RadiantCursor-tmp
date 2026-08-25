@@ -18,7 +18,7 @@ test("adaptador Windows persiste configuração validada sem iniciar o runtime",
     setLoginItem: (enabled) => loginChanges.push(enabled),
   });
 
-  const state = await adapter.applySettings({ ...DEFAULT_RADIANT_CURSOR_SETTINGS, Style: "nova", TrailOffsetX: -4, TrailOffsetY: 12, TrailDistance: 18 });
+  const state = await adapter.applySettings({ ...DEFAULT_RADIANT_CURSOR_SETTINGS, Style: "nova", TrailOffsetX: -4, TrailOffsetY: 12, CursorTextOffsetX: -2, CursorTextOffsetY: 17, TrailDistance: 18, HaloEnabled: true, HaloStyle: "stars", HaloDistance: 72, HaloVariantInterval: 10 });
   assert.equal(state.settings.Style, "nova");
   assert.equal(state.isLoaded, false);
   assert.equal(state.compatibility.platform, "windows");
@@ -29,7 +29,13 @@ test("adaptador Windows persiste configuração validada sem iniciar o runtime",
   assert.equal(stored.settings.Style, "nova");
   assert.equal(stored.settings.TrailOffsetX, -4);
   assert.equal(stored.settings.TrailOffsetY, 12);
+  assert.equal((stored.settings as typeof stored.settings & { CursorTextOffsetX: number }).CursorTextOffsetX, -2);
+  assert.equal((stored.settings as typeof stored.settings & { CursorTextOffsetY: number }).CursorTextOffsetY, 17);
   assert.equal(stored.settings.TrailDistance, 18);
+  assert.equal((stored.settings as typeof stored.settings & { HaloEnabled: boolean }).HaloEnabled, true);
+  assert.equal((stored.settings as typeof stored.settings & { HaloStyle: string }).HaloStyle, "stars");
+  assert.equal((stored.settings as typeof stored.settings & { HaloDistance: number }).HaloDistance, 72);
+  assert.equal((stored.settings as typeof stored.settings & { HaloVariantInterval: number }).HaloVariantInterval, 10);
   assert.equal(stored.enabled, false);
 });
 

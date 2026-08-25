@@ -33,7 +33,7 @@
     "package:linux:normal": "npm run build && npm run package:linux:normal:built",
     "package:linux:studio": "npm run build && npm run package:linux:studio:built",
     "package:linux": "npm run build && npm run package:linux:normal:built && npm run package:linux:studio:built",
-    "build:runtime:windows": "cmake -S native/windows -B native/windows/build -DCMAKE_BUILD_TYPE=Release && cmake --build native/windows/build --config Release --parallel",
+    "build:runtime:windows": "node scripts/build-windows-runtime.mjs",
     "package:windows:normal:built": "electron-builder --config electron-builder.normal.windows.json --win nsis",
     "package:windows:studio:built": "electron-builder --config electron-builder.studio.windows.json --win nsis",
     "package:windows:normal": "npm run build:runtime:windows && npm run build && npm run package:windows:normal:built",

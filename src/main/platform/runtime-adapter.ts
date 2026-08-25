@@ -3,6 +3,7 @@ import type {
   RadiantCursorState,
   RuntimeCompatibility,
 } from "../../shared/types";
+import type { EffectTarget } from "../../shared/motion/schema";
 
 export interface ActiveEngineRevision {
   effectId: string | null;
@@ -16,8 +17,8 @@ export interface RuntimeAdapter {
   applySettings(settings: unknown): Promise<RadiantCursorState>;
   activateEffect(settings?: unknown): Promise<RadiantCursorState>;
   disableEffect(): Promise<RadiantCursorState>;
-  readActiveEngineRevision(): Promise<ActiveEngineRevision>;
-  activateEngineRevision(effectId: string, revision: string): Promise<void>;
+  readActiveEngineRevision(target?: EffectTarget): Promise<ActiveEngineRevision>;
+  activateEngineRevision(effectId: string, revision: string, target?: EffectTarget): Promise<void>;
   dispose?(): Promise<void>;
 }
 
@@ -27,5 +28,7 @@ export interface RuntimeStateFile {
   settings: RadiantCursorSettings;
   activeEffectId: string | null;
   activeRevision: string | null;
+  activeHaloEffectId: string | null;
+  activeHaloRevision: string | null;
   updatedAt: string;
 }

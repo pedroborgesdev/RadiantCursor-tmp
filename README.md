@@ -2,8 +2,8 @@
 
 O projeto instala dois aplicativos independentes que compartilham o mesmo formato de efeitos e selecionam automaticamente o runtime da plataforma:
 
-- **RadiantCursor**: executor simples para escolher, personalizar, ativar e desativar os 28 efeitos de clique e 20 rastros clássicos no KWin ou Windows.
-- **RadiantCursor Studio**: editor de motion design para criar, salvar e publicar composições geométricas.
+- **RadiantCursor**: executor simples para escolher, personalizar, ativar e desativar 28 efeitos de clique, 20 rastros e 20 halos persistentes no KWin ou Windows.
+- **RadiantCursor Studio**: editor de motion design para criar, salvar e publicar composições geométricas de clique ou halos contínuos.
 
 As interfaces são Electron + TypeScript + React + Tailwind CSS e o backend também é TypeScript. Não há interface Python ou PyQt.
 
@@ -11,13 +11,15 @@ No Linux, a captura e a renderização são feitas pelo plugin nativo do KWin. N
 
 O Studio compila um único `RuntimeDefinition` (`runtime.json`). O plugin KWin e o runtime Windows interpretam esse mesmo arquivo; um projeto não precisa ser convertido ou duplicado por plataforma.
 
+O halo acompanha continuamente o ponto central configurado para o cursor, não depende de movimento nem expira. Os estilos nativos usam montagens radiais próprias, animação contínua e até quatro variantes determinísticas em ordem sem repetição imediata. Projetos de halo do Studio executam sua timeline em loop e possuem revisão ativa independente do efeito de clique.
+
 ## Motion editor geométrico (schema v2)
 
 O RadiantCursor Studio funciona como um mini editor de motion design. O documento editável é hierárquico e normalizado; o deploy o valida e compila para um `runtime.json` linear e imutável que o plugin carrega uma única vez.
 
 - formas circle, rectangle, triangle, diamond, star, hexagon, polygon e line;
 - fill e stroke independentes, inclusive combinados no mesmo elemento;
-- canvas SVG com origem do clique, grid, zoom, seleção, movimento, resize e rotação;
+- canvas SVG com origem do clique ou centro do cursor, grid, zoom, seleção, movimento, resize e rotação;
 - árvore com visibilidade, bloqueio, renomeação, drag-and-drop, grupos e grupos aninhados;
 - transformações locais herdadas por `parent × local`;
 - timing relativo ao grupo e ação para esticar toda a composição interna;
@@ -35,8 +37,7 @@ No Linux, documentos e assets ficam em `~/.local/share/radiantcursor-studio`. No
 
 ## Recursos legados preservados
 
-- abas independentes para a engine, efeitos de clique e rastro do cursor;
-- navegação em módulos independentes para efeitos de clique e rastro do cursor;
+- abas independentes para efeitos de clique, rastro e halo do cursor;
 - 28 efeitos reais, cada um com ícone próprio, organizados nas páginas de
   contorno e preenchidos: Ondas, Pulso, Alvo,
   Explosão, Faísca, Foco, Halo, Impacto, Órbita, Pétalas, Diamante, Sonar,
@@ -51,8 +52,15 @@ No Linux, documentos e assets ficam em `~/.local/share/radiantcursor-studio`. No
   Laser, Fogo, Gelo, Pétalas, Pixels, Órbita e Arco-íris;
 - controles independentes de cor, tamanho, duração, densidade, frequência, opacidade,
   brilho e ativação somente durante arraste para o rastro;
+- seção avançada recolhível no rastro e no halo, com centros X/Y próprios para
+  cursor padrão, texto, link, mira, ocupado, mover, bloqueado, ajuda e os quatro
+  sentidos de redimensionamento; cursores personalizados usam o perfil padrão;
 - cada emissão de rastro gera múltiplas partículas com variação de tamanho e
   direção, alternando entre quatro distribuições sem repetição consecutiva;
+- 20 halos persistentes baseados nos estilos de rastro, reorganizados em anéis
+  e órbitas para envolver o cursor mesmo quando ele está parado;
+- controles de cor, tamanho, distância radial, densidade, opacidade, velocidade
+  exclusiva do giro, brilho e intervalo entre as quatro montagens do halo;
 - cores independentes para cada botão;
 - controles de tamanho, espessura, duração e quantidade/detalhes;
 - texto opcional com família, tamanho, peso e estilo da fonte;
@@ -193,6 +201,17 @@ npm run dev:radiantcursor
 npm run dev:studio
 ```
 
+O comando `build:runtime:windows` detecta o sistema operacional. No Windows ele
+usa o toolchain do Visual Studio; no Linux ele faz cross-build x64 com MinGW-w64.
+Para gerar os instaladores Windows a partir do Linux, instale antes as ferramentas:
+
+```bash
+sudo apt update
+sudo apt install -y mingw-w64 wine64
+npm ci
+npm run package:windows
+```
+
 Para gerar os dois instaladores independentes:
 
 ```powershell
@@ -244,7 +263,7 @@ do Chromium sobre gerenciamento de cor.
 
 ## Integração com o KWin
 
-As preferências são lidas e gravadas no grupo `[Effect-radiantcursor]` de `~/.config/kwinrc`. `ActiveEffectId` e `ActiveRevision` apontam para a revisão declarativa. As opções `Color1`, `Color2`, `Color3`, `LineWidth`, `RingLife`, `RingSize`, `RingCount`, `ShowText`, `Font`, `Style`, `Trigger`, `Glow` e as opções de rastro continuam disponíveis para compatibilidade. A ativação é registrada em `Plugins/radiantcursorEnabled`.
+As preferências são lidas e gravadas no grupo `[Effect-radiantcursor]` de `~/.config/kwinrc`. `ActiveEffectId`/`ActiveRevision` apontam para a revisão declarativa do clique e `ActiveHaloEffectId`/`ActiveHaloRevision` para a revisão independente do halo. As opções `Color1`, `Color2`, `Color3`, `LineWidth`, `RingLife`, `RingSize`, `RingCount`, `ShowText`, `Font`, `Style`, `Trigger`, `Glow`, rastro e halo continuam disponíveis. A ativação é registrada em `Plugins/radiantcursorEnabled`.
 
 Depois de aplicar uma alteração, o backend solicita ao KWin que recarregue a configuração. A ação **Aplicar e ativar** carrega o plugin RadiantCursor e desabilita o `mouseclick` padrão para evitar efeitos duplicados; **Desativar** descarrega o RadiantCursor. Toda integração com o sistema é feita pelo processo principal do Electron, e a interface React não recebe acesso direto ao Node.js.
 

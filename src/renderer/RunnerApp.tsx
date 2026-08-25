@@ -44,9 +44,38 @@ const FILLED_EFFECTS = new Set<ClickEffectStyle>([
   "ink", "splash", "nova", "comet", "eclipse", "plasma", "pixelburst", "prism", "flower", "meteor",
 ]);
 
-type Tab = "click" | "trail";
+type Tab = "click" | "trail" | "halo";
 type ClickFilter = "all" | "outline" | "filled";
 type Update = <K extends keyof RadiantCursorSettings>(key: K, value: RadiantCursorSettings[K]) => void;
+type CursorOffsetKey = keyof Pick<RadiantCursorSettings,
+  | "TrailOffsetX" | "TrailOffsetY"
+  | "CursorTextOffsetX" | "CursorTextOffsetY"
+  | "CursorLinkOffsetX" | "CursorLinkOffsetY"
+  | "CursorCrosshairOffsetX" | "CursorCrosshairOffsetY"
+  | "CursorBusyOffsetX" | "CursorBusyOffsetY"
+  | "CursorMoveOffsetX" | "CursorMoveOffsetY"
+  | "CursorForbiddenOffsetX" | "CursorForbiddenOffsetY"
+  | "CursorHelpOffsetX" | "CursorHelpOffsetY"
+  | "CursorResizeHorizontalOffsetX" | "CursorResizeHorizontalOffsetY"
+  | "CursorResizeVerticalOffsetX" | "CursorResizeVerticalOffsetY"
+  | "CursorResizeDiagonalNwSeOffsetX" | "CursorResizeDiagonalNwSeOffsetY"
+  | "CursorResizeDiagonalNeSwOffsetX" | "CursorResizeDiagonalNeSwOffsetY"
+>;
+
+const CURSOR_CENTER_PROFILES: ReadonlyArray<{ label: string; detail: string; x: CursorOffsetKey; y: CursorOffsetKey }> = [
+  { label: "Padrão", detail: "Seta e cursores personalizados", x: "TrailOffsetX", y: "TrailOffsetY" },
+  { label: "Texto", detail: "Barra de digitação", x: "CursorTextOffsetX", y: "CursorTextOffsetY" },
+  { label: "Link", detail: "Mão sobre links", x: "CursorLinkOffsetX", y: "CursorLinkOffsetY" },
+  { label: "Mira", detail: "Seleção precisa", x: "CursorCrosshairOffsetX", y: "CursorCrosshairOffsetY" },
+  { label: "Ocupado", detail: "Espera e progresso", x: "CursorBusyOffsetX", y: "CursorBusyOffsetY" },
+  { label: "Mover", detail: "Mover e arrastar", x: "CursorMoveOffsetX", y: "CursorMoveOffsetY" },
+  { label: "Bloqueado", detail: "Ação não permitida", x: "CursorForbiddenOffsetX", y: "CursorForbiddenOffsetY" },
+  { label: "Ajuda", detail: "Ajuda contextual", x: "CursorHelpOffsetX", y: "CursorHelpOffsetY" },
+  { label: "Redim. horizontal", detail: "Leste e oeste", x: "CursorResizeHorizontalOffsetX", y: "CursorResizeHorizontalOffsetY" },
+  { label: "Redim. vertical", detail: "Norte e sul", x: "CursorResizeVerticalOffsetX", y: "CursorResizeVerticalOffsetY" },
+  { label: "Diagonal ↘", detail: "Noroeste e sudeste", x: "CursorResizeDiagonalNwSeOffsetX", y: "CursorResizeDiagonalNwSeOffsetY" },
+  { label: "Diagonal ↙", detail: "Nordeste e sudoeste", x: "CursorResizeDiagonalNeSwOffsetX", y: "CursorResizeDiagonalNeSwOffsetY" },
+];
 
 export function RunnerApp() {
   const [tab, setTab] = useState<Tab>("click");
@@ -138,9 +167,9 @@ export function RunnerApp() {
   };
 
   const rawList = tab === "click" ? CLICK_EFFECTS : TRAILS;
-  const selectedId = tab === "click" ? settings.Style : settings.TrailStyle;
+  const selectedId = tab === "click" ? settings.Style : tab === "trail" ? settings.TrailStyle : settings.HaloStyle;
   const selected = rawList.find(([id]) => id === selectedId) ?? rawList[0]!;
-  const featureEnabled = tab === "click" ? settings.ClickEnabled : settings.TrailEnabled;
+  const featureEnabled = tab === "click" ? settings.ClickEnabled : tab === "trail" ? settings.TrailEnabled : settings.HaloEnabled;
   const normalizedQuery = query.trim().toLocaleLowerCase("pt-BR");
   const pickerItems = rawList.filter(([id, name, description]) => {
     const matchesQuery = !normalizedQuery || `${name} ${description}`.toLocaleLowerCase("pt-BR").includes(normalizedQuery);
@@ -158,19 +187,21 @@ export function RunnerApp() {
 
   const selectEffect = (id: ClickEffectStyle | TrailStyle) => {
     if (tab === "click") update("Style", id as ClickEffectStyle);
-    else update("TrailStyle", id as TrailStyle);
+    else if (tab === "trail") update("TrailStyle", id as TrailStyle);
+    else update("HaloStyle", id as TrailStyle);
     setPickerOpen(false);
   };
 
   const toggleFeature = () => {
     if (tab === "click") update("ClickEnabled", !settings.ClickEnabled);
-    else update("TrailEnabled", !settings.TrailEnabled);
+    else if (tab === "trail") update("TrailEnabled", !settings.TrailEnabled);
+    else update("HaloEnabled", !settings.HaloEnabled);
   };
 
   return (
     <div className="runner-shell runner-compact">
       <header className="compact-header">
-        <div className="compact-brand"><span><img src={radiantCursorIcon} alt="" /></span><div><strong>RadiantCursor</strong><small>Cliques e rastros para o sistema</small></div></div>
+        <div className="compact-brand"><span><img src={radiantCursorIcon} alt="" /></span><div><strong>RadiantCursor</strong><small>Cliques, rastros e halos para o sistema</small></div></div>
         <div className="window-actions"><button className={`kwin-switch ${state?.isLoaded ? "active" : ""}`} disabled={busy} onClick={() => state?.isLoaded ? void disable() : void apply(true)} title={state?.isLoaded ? `Desativar no ${runtimeName}` : `Ativar no ${runtimeName}`}><i />{busy ? "Aguarde…" : state?.isLoaded ? `Ativo no ${runtimeName}` : `Ativar no ${runtimeName}`}</button><i className="window-divider" /><button className="window-button" title="Minimizar" aria-label="Minimizar janela" onClick={() => void window.radiantcursor?.minimizeWindow()}><Icon name="minus" size={14} /></button><button className="window-button close" title="Fechar" aria-label="Fechar janela" onClick={() => void window.radiantcursor?.closeWindow()}><Icon name="close" size={14} /></button></div>
       </header>
 
@@ -182,16 +213,17 @@ export function RunnerApp() {
         <nav className="compact-tabs" aria-label="Área de personalização">
           <button className={tab === "click" ? "active" : ""} onClick={() => switchTab("click")}><Icon name="pointer" size={13} /> Cliques</button>
           <button className={tab === "trail" ? "active" : ""} onClick={() => switchTab("trail")}><Icon name="sparkles" size={13} /> Rastro</button>
+          <button className={tab === "halo" ? "active" : ""} onClick={() => switchTab("halo")}><span aria-hidden="true">◉</span> Halo</button>
         </nav>
 
         <section className="quick-config">
           <div className="effect-control-row">
             <div className="effect-picker" ref={pickerRef}>
-              <label>{tab === "click" ? "Efeito" : "Estilo do rastro"}</label>
+              <label>{tab === "click" ? "Efeito" : tab === "trail" ? "Estilo do rastro" : "Estilo do halo"}</label>
               <button className="effect-select" onClick={() => setPickerOpen((value) => !value)} aria-expanded={pickerOpen}><i>{selected[3]}</i><span><strong>{selected[1]}</strong><small>{selected[2]}</small></span><Icon name="chevron" size={13} /></button>
               {pickerOpen && (
                 <div className="effect-popover">
-                  <label className="effect-search"><Icon name="search" size={13} /><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder={tab === "click" ? "Buscar efeito…" : "Buscar rastro…"} /></label>
+                  <label className="effect-search"><Icon name="search" size={13} /><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder={tab === "click" ? "Buscar efeito…" : tab === "trail" ? "Buscar rastro…" : "Buscar halo…"} /></label>
                   {tab === "click" && <div className="effect-filters"><button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>Todos</button><button className={filter === "outline" ? "active" : ""} onClick={() => setFilter("outline")}>Contorno</button><button className={filter === "filled" ? "active" : ""} onClick={() => setFilter("filled")}>Preenchidos</button></div>}
                   <div className="effect-options">
                     {pickerItems.map(([id, name, description, mark]) => <button key={id} className={id === selectedId ? "selected" : ""} onClick={() => selectEffect(id)} title={description}><i>{mark}</i><span>{name}</span>{id === selectedId && <Icon name="check" size={12} />}</button>)}
@@ -200,11 +232,11 @@ export function RunnerApp() {
                 </div>
               )}
             </div>
-            <button className={`feature-switch ${featureEnabled ? "enabled" : ""}`} onClick={toggleFeature}><span><strong>{tab === "click" ? "Cliques" : "Rastro"}</strong><small>{featureEnabled ? "Ligado" : "Desligado"}</small></span><i><b /></i></button>
+            <button className={`feature-switch ${featureEnabled ? "enabled" : ""}`} onClick={toggleFeature}><span><strong>{tab === "click" ? "Cliques" : tab === "trail" ? "Rastro" : "Halo"}</strong><small>{featureEnabled ? "Ligado" : "Desligado"}</small></span><i><b /></i></button>
           </div>
 
           <div className="quick-settings">
-            {tab === "click" ? <ClickSettings settings={settings} update={update} /> : <TrailSettings settings={settings} update={update} />}
+            {tab === "click" ? <ClickSettings settings={settings} update={update} /> : tab === "trail" ? <TrailSettings settings={settings} update={update} /> : <HaloSettings settings={settings} update={update} />}
           </div>
         </section>
       </main>
@@ -222,6 +254,16 @@ export function RunnerApp() {
 
 function SettingsSection({ title, children }: { title: string; children: ReactNode }) {
   return <section className="compact-more"><div className="compact-more-title">{title}</div><div>{children}</div></section>;
+}
+
+function AdvancedSettingsSection({ children }: { children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return <section className={`compact-more compact-advanced ${open ? "open" : ""}`}>
+    <button type="button" className="compact-more-title compact-advanced-trigger" aria-expanded={open} onClick={() => setOpen((current) => !current)}>
+      <span>Avançado</span><Icon name="chevron" size={14} />
+    </button>
+    {open && <div className="compact-advanced-body">{children}</div>}
+  </section>;
 }
 
 function Toggle({ label, value, onChange }: { label: string; value: boolean; onChange: (value: boolean) => void }) {
@@ -259,14 +301,46 @@ function TrailSettings({ settings, update }: { settings: RadiantCursorSettings; 
       <div className="compact-colors"><strong>Cor</strong><div><Color label="Cor das partículas" shortLabel="Rastro" value={settings.TrailColor} onChange={(value) => update("TrailColor", value)} /></div></div>
       <CompactRanges><Range label="Tamanho" value={settings.TrailSize} min={2} max={80} suffix=" px" onChange={(value) => update("TrailSize", value)} /><Range label="Duração" value={settings.TrailLife} min={80} max={2500} step={10} suffix=" ms" onChange={(value) => update("TrailLife", value)} /><Range label="Frequência" value={settings.TrailFrequency} min={1} max={120} suffix=" Hz" onChange={(value) => update("TrailFrequency", value)} /></CompactRanges>
     </div>
-    <SettingsSection title="Mais opções">
+    <AdvancedSettingsSection>
       <div className="more-grid trail-more">
         <div className="trail-option-group"><strong>Partículas</strong><CompactRanges><Range label="Densidade" value={settings.TrailDensity} min={1} max={100} suffix="%" onChange={(value) => update("TrailDensity", value)} /><Range label="Opacidade" value={settings.TrailOpacity} min={0.05} max={1} step={0.05} display={(value) => `${Math.round(value * 100)}%`} onChange={(value) => update("TrailOpacity", value)} /></CompactRanges></div>
-        <div className="trail-option-group"><strong>Ponto verde</strong><CompactRanges><Range label="Eixo X" value={settings.TrailOffsetX} min={-64} max={64} suffix=" px" onChange={(value) => update("TrailOffsetX", value)} /><Range label="Eixo Y" value={settings.TrailOffsetY} min={-64} max={64} suffix=" px" onChange={(value) => update("TrailOffsetY", value)} /><Range label="Distância" value={settings.TrailDistance} min={0} max={64} suffix=" px" onChange={(value) => update("TrailDistance", value)} /></CompactRanges></div>
+        <div className="trail-option-group"><strong>Emissão</strong><CompactRanges><Range label="Distância" value={settings.TrailDistance} min={0} max={64} suffix=" px" onChange={(value) => update("TrailDistance", value)} /></CompactRanges></div>
         <div className="toggle-pair"><Toggle label="Brilho" value={settings.TrailGlow} onChange={(value) => update("TrailGlow", value)} /><Toggle label="Só durante clique" value={settings.TrailOnlyPressed} onChange={(value) => update("TrailOnlyPressed", value)} /></div>
       </div>
-    </SettingsSection>
+      <CursorCenterProfiles settings={settings} update={update} />
+    </AdvancedSettingsSection>
   </>;
+}
+
+function HaloSettings({ settings, update }: { settings: RadiantCursorSettings; update: Update }) {
+  return <>
+    <div className="essential-settings trail-settings">
+      <div className="compact-colors"><strong>Cor</strong><div><Color label="Cor do halo" shortLabel="Halo" value={settings.HaloColor} onChange={(value) => update("HaloColor", value)} /></div></div>
+      <CompactRanges><Range label="Partículas" value={settings.HaloSize} min={2} max={64} suffix=" px" onChange={(value) => update("HaloSize", value)} /><Range label="Distância" value={settings.HaloDistance} min={0} max={160} suffix=" px" onChange={(value) => update("HaloDistance", value)} /><Range label="Densidade" value={settings.HaloDensity} min={1} max={100} suffix="%" onChange={(value) => update("HaloDensity", value)} /><Range label="Giro" value={settings.HaloSpeed} min={0} max={4} step={0.1} suffix="×" onChange={(value) => update("HaloSpeed", value)} /></CompactRanges>
+    </div>
+    <AdvancedSettingsSection>
+      <div className="more-grid trail-more">
+        <div className="trail-option-group"><strong>Aparência</strong><CompactRanges><Range label="Opacidade" value={settings.HaloOpacity} min={0.05} max={1} step={0.05} display={(value) => `${Math.round(value * 100)}%`} onChange={(value) => update("HaloOpacity", value)} /><Range label="Variação" value={settings.HaloVariantInterval} min={10} max={5000} step={10} suffix=" ms" onChange={(value) => update("HaloVariantInterval", value)} /></CompactRanges></div>
+        <div className="toggle-pair"><Toggle label="Brilho" value={settings.HaloGlow} onChange={(value) => update("HaloGlow", value)} /><Toggle label="Alternar montagens" value={settings.HaloCycleVariants} onChange={(value) => update("HaloCycleVariants", value)} /></div>
+      </div>
+      <CursorCenterProfiles settings={settings} update={update} />
+    </AdvancedSettingsSection>
+  </>;
+}
+
+function CursorCenterProfiles({ settings, update }: { settings: RadiantCursorSettings; update: Update }) {
+  return <section className="cursor-center-settings">
+    <div className="cursor-center-heading"><strong>Centro por tipo de cursor</strong><span>Compartilhado entre rastro e halo. Cursores não reconhecidos usam o perfil Padrão.</span></div>
+    <div className="cursor-center-grid">
+      {CURSOR_CENTER_PROFILES.map((profile) => <div className="cursor-center-profile" key={profile.label}>
+        <div><strong>{profile.label}</strong><span>{profile.detail}</span></div>
+        <CompactRanges>
+          <Range label="Eixo X" value={settings[profile.x]} min={-64} max={64} suffix=" px" onChange={(value) => update(profile.x, value)} />
+          <Range label="Eixo Y" value={settings[profile.y]} min={-64} max={64} suffix=" px" onChange={(value) => update(profile.y, value)} />
+        </CompactRanges>
+      </div>)}
+    </div>
+  </section>;
 }
 
 function CompactRanges({ children }: { children: ReactNode }) {

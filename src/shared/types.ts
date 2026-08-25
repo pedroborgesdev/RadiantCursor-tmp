@@ -76,9 +76,42 @@ export interface RadiantCursorSettings {
   TrailOpacity: number;
   TrailOffsetX: number;
   TrailOffsetY: number;
+  CursorTextOffsetX: number;
+  CursorTextOffsetY: number;
+  CursorLinkOffsetX: number;
+  CursorLinkOffsetY: number;
+  CursorCrosshairOffsetX: number;
+  CursorCrosshairOffsetY: number;
+  CursorBusyOffsetX: number;
+  CursorBusyOffsetY: number;
+  CursorMoveOffsetX: number;
+  CursorMoveOffsetY: number;
+  CursorForbiddenOffsetX: number;
+  CursorForbiddenOffsetY: number;
+  CursorHelpOffsetX: number;
+  CursorHelpOffsetY: number;
+  CursorResizeHorizontalOffsetX: number;
+  CursorResizeHorizontalOffsetY: number;
+  CursorResizeVerticalOffsetX: number;
+  CursorResizeVerticalOffsetY: number;
+  CursorResizeDiagonalNwSeOffsetX: number;
+  CursorResizeDiagonalNwSeOffsetY: number;
+  CursorResizeDiagonalNeSwOffsetX: number;
+  CursorResizeDiagonalNeSwOffsetY: number;
   TrailDistance: number;
   TrailGlow: boolean;
   TrailOnlyPressed: boolean;
+  HaloEnabled: boolean;
+  HaloStyle: TrailStyle;
+  HaloColor: string;
+  HaloSize: number;
+  HaloDistance: number;
+  HaloDensity: number;
+  HaloOpacity: number;
+  HaloSpeed: number;
+  HaloVariantInterval: number;
+  HaloCycleVariants: boolean;
+  HaloGlow: boolean;
 }
 
 export type RuntimePlatform = "kwin" | "windows" | "unsupported";
@@ -161,9 +194,42 @@ export const DEFAULT_RADIANT_CURSOR_SETTINGS: Readonly<RadiantCursorSettings> = 
   TrailOpacity: 0.72,
   TrailOffsetX: 8,
   TrailOffsetY: 8,
+  CursorTextOffsetX: 8,
+  CursorTextOffsetY: 8,
+  CursorLinkOffsetX: 8,
+  CursorLinkOffsetY: 8,
+  CursorCrosshairOffsetX: 8,
+  CursorCrosshairOffsetY: 8,
+  CursorBusyOffsetX: 8,
+  CursorBusyOffsetY: 8,
+  CursorMoveOffsetX: 8,
+  CursorMoveOffsetY: 8,
+  CursorForbiddenOffsetX: 8,
+  CursorForbiddenOffsetY: 8,
+  CursorHelpOffsetX: 8,
+  CursorHelpOffsetY: 8,
+  CursorResizeHorizontalOffsetX: 8,
+  CursorResizeHorizontalOffsetY: 8,
+  CursorResizeVerticalOffsetX: 8,
+  CursorResizeVerticalOffsetY: 8,
+  CursorResizeDiagonalNwSeOffsetX: 8,
+  CursorResizeDiagonalNwSeOffsetY: 8,
+  CursorResizeDiagonalNeSwOffsetX: 8,
+  CursorResizeDiagonalNeSwOffsetY: 8,
   TrailDistance: 0,
   TrailGlow: true,
   TrailOnlyPressed: false,
+  HaloEnabled: false,
+  HaloStyle: "orbitTrail",
+  HaloColor: "#8bd97b",
+  HaloSize: 18,
+  HaloDistance: 48,
+  HaloDensity: 55,
+  HaloOpacity: 0.82,
+  HaloSpeed: 1,
+  HaloVariantInterval: 1400,
+  HaloCycleVariants: true,
+  HaloGlow: true,
 });
 
 export const RADIANT_CURSOR_IPC = Object.freeze({

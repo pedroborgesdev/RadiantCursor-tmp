@@ -53,9 +53,42 @@ const SETTING_KEYS = [
   "TrailOpacity",
   "TrailOffsetX",
   "TrailOffsetY",
+  "CursorTextOffsetX",
+  "CursorTextOffsetY",
+  "CursorLinkOffsetX",
+  "CursorLinkOffsetY",
+  "CursorCrosshairOffsetX",
+  "CursorCrosshairOffsetY",
+  "CursorBusyOffsetX",
+  "CursorBusyOffsetY",
+  "CursorMoveOffsetX",
+  "CursorMoveOffsetY",
+  "CursorForbiddenOffsetX",
+  "CursorForbiddenOffsetY",
+  "CursorHelpOffsetX",
+  "CursorHelpOffsetY",
+  "CursorResizeHorizontalOffsetX",
+  "CursorResizeHorizontalOffsetY",
+  "CursorResizeVerticalOffsetX",
+  "CursorResizeVerticalOffsetY",
+  "CursorResizeDiagonalNwSeOffsetX",
+  "CursorResizeDiagonalNwSeOffsetY",
+  "CursorResizeDiagonalNeSwOffsetX",
+  "CursorResizeDiagonalNeSwOffsetY",
   "TrailDistance",
   "TrailGlow",
   "TrailOnlyPressed",
+  "HaloEnabled",
+  "HaloStyle",
+  "HaloColor",
+  "HaloSize",
+  "HaloDistance",
+  "HaloDensity",
+  "HaloOpacity",
+  "HaloSpeed",
+  "HaloVariantInterval",
+  "HaloCycleVariants",
+  "HaloGlow",
 ] as const satisfies readonly (keyof RadiantCursorSettings)[];
 
 type SettingKey = (typeof SETTING_KEYS)[number];
@@ -209,6 +242,11 @@ export function validateRadiantCursorSettings(value: unknown): RadiantCursorSett
       typeof value.TrailOnlyPressed !== "boolean") {
     throw new KWinIntegrationError("As opções booleanas do rastro são inválidas.");
   }
+  if (typeof value.HaloEnabled !== "boolean" ||
+      typeof value.HaloCycleVariants !== "boolean" ||
+      typeof value.HaloGlow !== "boolean") {
+    throw new KWinIntegrationError("As opções booleanas do halo são inválidas.");
+  }
 
   return {
     ClickEnabled: value.ClickEnabled,
@@ -234,9 +272,42 @@ export function validateRadiantCursorSettings(value: unknown): RadiantCursorSett
     TrailOpacity: validateNumber(value.TrailOpacity, "TrailOpacity", 0.05, 1),
     TrailOffsetX: validateNumber(value.TrailOffsetX, "TrailOffsetX", -128, 128),
     TrailOffsetY: validateNumber(value.TrailOffsetY, "TrailOffsetY", -128, 128),
+    CursorTextOffsetX: validateNumber(value.CursorTextOffsetX, "CursorTextOffsetX", -128, 128),
+    CursorTextOffsetY: validateNumber(value.CursorTextOffsetY, "CursorTextOffsetY", -128, 128),
+    CursorLinkOffsetX: validateNumber(value.CursorLinkOffsetX, "CursorLinkOffsetX", -128, 128),
+    CursorLinkOffsetY: validateNumber(value.CursorLinkOffsetY, "CursorLinkOffsetY", -128, 128),
+    CursorCrosshairOffsetX: validateNumber(value.CursorCrosshairOffsetX, "CursorCrosshairOffsetX", -128, 128),
+    CursorCrosshairOffsetY: validateNumber(value.CursorCrosshairOffsetY, "CursorCrosshairOffsetY", -128, 128),
+    CursorBusyOffsetX: validateNumber(value.CursorBusyOffsetX, "CursorBusyOffsetX", -128, 128),
+    CursorBusyOffsetY: validateNumber(value.CursorBusyOffsetY, "CursorBusyOffsetY", -128, 128),
+    CursorMoveOffsetX: validateNumber(value.CursorMoveOffsetX, "CursorMoveOffsetX", -128, 128),
+    CursorMoveOffsetY: validateNumber(value.CursorMoveOffsetY, "CursorMoveOffsetY", -128, 128),
+    CursorForbiddenOffsetX: validateNumber(value.CursorForbiddenOffsetX, "CursorForbiddenOffsetX", -128, 128),
+    CursorForbiddenOffsetY: validateNumber(value.CursorForbiddenOffsetY, "CursorForbiddenOffsetY", -128, 128),
+    CursorHelpOffsetX: validateNumber(value.CursorHelpOffsetX, "CursorHelpOffsetX", -128, 128),
+    CursorHelpOffsetY: validateNumber(value.CursorHelpOffsetY, "CursorHelpOffsetY", -128, 128),
+    CursorResizeHorizontalOffsetX: validateNumber(value.CursorResizeHorizontalOffsetX, "CursorResizeHorizontalOffsetX", -128, 128),
+    CursorResizeHorizontalOffsetY: validateNumber(value.CursorResizeHorizontalOffsetY, "CursorResizeHorizontalOffsetY", -128, 128),
+    CursorResizeVerticalOffsetX: validateNumber(value.CursorResizeVerticalOffsetX, "CursorResizeVerticalOffsetX", -128, 128),
+    CursorResizeVerticalOffsetY: validateNumber(value.CursorResizeVerticalOffsetY, "CursorResizeVerticalOffsetY", -128, 128),
+    CursorResizeDiagonalNwSeOffsetX: validateNumber(value.CursorResizeDiagonalNwSeOffsetX, "CursorResizeDiagonalNwSeOffsetX", -128, 128),
+    CursorResizeDiagonalNwSeOffsetY: validateNumber(value.CursorResizeDiagonalNwSeOffsetY, "CursorResizeDiagonalNwSeOffsetY", -128, 128),
+    CursorResizeDiagonalNeSwOffsetX: validateNumber(value.CursorResizeDiagonalNeSwOffsetX, "CursorResizeDiagonalNeSwOffsetX", -128, 128),
+    CursorResizeDiagonalNeSwOffsetY: validateNumber(value.CursorResizeDiagonalNeSwOffsetY, "CursorResizeDiagonalNeSwOffsetY", -128, 128),
     TrailDistance: validateNumber(value.TrailDistance, "TrailDistance", 0, 128),
     TrailGlow: value.TrailGlow,
     TrailOnlyPressed: value.TrailOnlyPressed,
+    HaloEnabled: value.HaloEnabled,
+    HaloStyle: validateChoice(value.HaloStyle, "HaloStyle", TRAIL_STYLES),
+    HaloColor: validateColor(value.HaloColor, "HaloColor"),
+    HaloSize: validateNumber(value.HaloSize, "HaloSize", 1, 200),
+    HaloDistance: validateNumber(value.HaloDistance, "HaloDistance", 0, 256),
+    HaloDensity: validateNumber(value.HaloDensity, "HaloDensity", 1, 100, true),
+    HaloOpacity: validateNumber(value.HaloOpacity, "HaloOpacity", 0.05, 1),
+    HaloSpeed: validateNumber(value.HaloSpeed, "HaloSpeed", 0, 4),
+    HaloVariantInterval: validateNumber(value.HaloVariantInterval, "HaloVariantInterval", 10, 5_000, true),
+    HaloCycleVariants: value.HaloCycleVariants,
+    HaloGlow: value.HaloGlow,
   };
 }
 
@@ -324,6 +395,19 @@ function formatConfigValue(value: RadiantCursorSettings[SettingKey] | boolean): 
     return value ? "true" : "false";
   }
   return String(value);
+}
+
+export function buildWriteKeyArguments(group: string, key: string, value: string): string[] {
+  return [
+    "--file",
+    CONFIG_FILE,
+    "--group",
+    group,
+    "--key",
+    key,
+    "--",
+    value,
+  ];
 }
 
 function parseBoolean(value: string, fallback: boolean): boolean {
@@ -465,15 +549,7 @@ export class KWinController {
     key: string,
     value: string,
   ): Promise<void> {
-    await runCommand(writer, [
-      "--file",
-      CONFIG_FILE,
-      "--group",
-      group,
-      "--key",
-      key,
-      value,
-    ]);
+    await runCommand(writer, buildWriteKeyArguments(group, key, value));
   }
 
   private async createSessionBackup(): Promise<string | null> {
@@ -528,6 +604,8 @@ export class KWinController {
     await this.ensureSessionBackup();
     await this.writeKey(writer, EFFECT_GROUP, "ActiveEffectId", "");
     await this.writeKey(writer, EFFECT_GROUP, "ActiveRevision", "");
+    await this.writeKey(writer, EFFECT_GROUP, "ActiveHaloEffectId", "");
+    await this.writeKey(writer, EFFECT_GROUP, "ActiveHaloRevision", "");
   }
 
   private async setPluginEnabled(enabled: boolean): Promise<void> {
@@ -663,9 +741,44 @@ export class KWinController {
       TrailOpacity: parseNumber(raw.TrailOpacity, defaults.TrailOpacity, 0.05, 1),
       TrailOffsetX: parseNumber(raw.TrailOffsetX, defaults.TrailOffsetX, -128, 128),
       TrailOffsetY: parseNumber(raw.TrailOffsetY, defaults.TrailOffsetY, -128, 128),
+      CursorTextOffsetX: parseNumber(raw.CursorTextOffsetX, defaults.CursorTextOffsetX, -128, 128),
+      CursorTextOffsetY: parseNumber(raw.CursorTextOffsetY, defaults.CursorTextOffsetY, -128, 128),
+      CursorLinkOffsetX: parseNumber(raw.CursorLinkOffsetX, defaults.CursorLinkOffsetX, -128, 128),
+      CursorLinkOffsetY: parseNumber(raw.CursorLinkOffsetY, defaults.CursorLinkOffsetY, -128, 128),
+      CursorCrosshairOffsetX: parseNumber(raw.CursorCrosshairOffsetX, defaults.CursorCrosshairOffsetX, -128, 128),
+      CursorCrosshairOffsetY: parseNumber(raw.CursorCrosshairOffsetY, defaults.CursorCrosshairOffsetY, -128, 128),
+      CursorBusyOffsetX: parseNumber(raw.CursorBusyOffsetX, defaults.CursorBusyOffsetX, -128, 128),
+      CursorBusyOffsetY: parseNumber(raw.CursorBusyOffsetY, defaults.CursorBusyOffsetY, -128, 128),
+      CursorMoveOffsetX: parseNumber(raw.CursorMoveOffsetX, defaults.CursorMoveOffsetX, -128, 128),
+      CursorMoveOffsetY: parseNumber(raw.CursorMoveOffsetY, defaults.CursorMoveOffsetY, -128, 128),
+      CursorForbiddenOffsetX: parseNumber(raw.CursorForbiddenOffsetX, defaults.CursorForbiddenOffsetX, -128, 128),
+      CursorForbiddenOffsetY: parseNumber(raw.CursorForbiddenOffsetY, defaults.CursorForbiddenOffsetY, -128, 128),
+      CursorHelpOffsetX: parseNumber(raw.CursorHelpOffsetX, defaults.CursorHelpOffsetX, -128, 128),
+      CursorHelpOffsetY: parseNumber(raw.CursorHelpOffsetY, defaults.CursorHelpOffsetY, -128, 128),
+      CursorResizeHorizontalOffsetX: parseNumber(raw.CursorResizeHorizontalOffsetX, defaults.CursorResizeHorizontalOffsetX, -128, 128),
+      CursorResizeHorizontalOffsetY: parseNumber(raw.CursorResizeHorizontalOffsetY, defaults.CursorResizeHorizontalOffsetY, -128, 128),
+      CursorResizeVerticalOffsetX: parseNumber(raw.CursorResizeVerticalOffsetX, defaults.CursorResizeVerticalOffsetX, -128, 128),
+      CursorResizeVerticalOffsetY: parseNumber(raw.CursorResizeVerticalOffsetY, defaults.CursorResizeVerticalOffsetY, -128, 128),
+      CursorResizeDiagonalNwSeOffsetX: parseNumber(raw.CursorResizeDiagonalNwSeOffsetX, defaults.CursorResizeDiagonalNwSeOffsetX, -128, 128),
+      CursorResizeDiagonalNwSeOffsetY: parseNumber(raw.CursorResizeDiagonalNwSeOffsetY, defaults.CursorResizeDiagonalNwSeOffsetY, -128, 128),
+      CursorResizeDiagonalNeSwOffsetX: parseNumber(raw.CursorResizeDiagonalNeSwOffsetX, defaults.CursorResizeDiagonalNeSwOffsetX, -128, 128),
+      CursorResizeDiagonalNeSwOffsetY: parseNumber(raw.CursorResizeDiagonalNeSwOffsetY, defaults.CursorResizeDiagonalNeSwOffsetY, -128, 128),
       TrailDistance: parseNumber(raw.TrailDistance, defaults.TrailDistance, 0, 128),
       TrailGlow: parseBoolean(raw.TrailGlow, defaults.TrailGlow),
       TrailOnlyPressed: parseBoolean(raw.TrailOnlyPressed, defaults.TrailOnlyPressed),
+      HaloEnabled: parseBoolean(raw.HaloEnabled, defaults.HaloEnabled),
+      HaloStyle: TRAIL_STYLES.includes(raw.HaloStyle as (typeof TRAIL_STYLES)[number])
+        ? raw.HaloStyle as RadiantCursorSettings["HaloStyle"]
+        : defaults.HaloStyle,
+      HaloColor: parseColor(raw.HaloColor, defaults.HaloColor),
+      HaloSize: parseNumber(raw.HaloSize, defaults.HaloSize, 1, 200),
+      HaloDistance: parseNumber(raw.HaloDistance, defaults.HaloDistance, 0, 256),
+      HaloDensity: parseNumber(raw.HaloDensity, defaults.HaloDensity, 1, 100, true),
+      HaloOpacity: parseNumber(raw.HaloOpacity, defaults.HaloOpacity, 0.05, 1),
+      HaloSpeed: parseNumber(raw.HaloSpeed, defaults.HaloSpeed, 0, 4),
+      HaloVariantInterval: parseNumber(raw.HaloVariantInterval, defaults.HaloVariantInterval, 10, 5_000, true),
+      HaloCycleVariants: parseBoolean(raw.HaloCycleVariants, defaults.HaloCycleVariants),
+      HaloGlow: parseBoolean(raw.HaloGlow, defaults.HaloGlow),
     };
   }
 
@@ -764,25 +877,27 @@ export class KWinController {
     };
   }
 
-  async readActiveEngineRevision(): Promise<{ effectId: string | null; revision: string | null }> {
+  async readActiveEngineRevision(target: "click" | "halo" = "click"): Promise<{ effectId: string | null; revision: string | null }> {
     const reader = await findCommand("reader");
     if (!reader) return { effectId: null, revision: null };
+    const idKey = target === "halo" ? "ActiveHaloEffectId" : "ActiveEffectId";
+    const revisionKey = target === "halo" ? "ActiveHaloRevision" : "ActiveRevision";
     const [effectId, revision] = await Promise.all([
-      this.readKey(reader, EFFECT_GROUP, "ActiveEffectId", ""),
-      this.readKey(reader, EFFECT_GROUP, "ActiveRevision", ""),
+      this.readKey(reader, EFFECT_GROUP, idKey, ""),
+      this.readKey(reader, EFFECT_GROUP, revisionKey, ""),
     ]);
     return { effectId: effectId || null, revision: revision || null };
   }
 
-  activateEngineRevision(effectId: string, revision: string): Promise<void> {
+  activateEngineRevision(effectId: string, revision: string, target: "click" | "halo" = "click"): Promise<void> {
     if (!/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(effectId) || !/^sha256:[a-f0-9]{64}$/.test(revision)) {
       throw new KWinIntegrationError("Efeito ou revisão declarativa inválida.");
     }
     return this.enqueueMutation(async () => {
       const writer = await this.requireCommand("writer");
       await this.ensureSessionBackup();
-      await this.writeKey(writer, EFFECT_GROUP, "ActiveEffectId", effectId);
-      await this.writeKey(writer, EFFECT_GROUP, "ActiveRevision", revision);
+      await this.writeKey(writer, EFFECT_GROUP, target === "halo" ? "ActiveHaloEffectId" : "ActiveEffectId", effectId);
+      await this.writeKey(writer, EFFECT_GROUP, target === "halo" ? "ActiveHaloRevision" : "ActiveRevision", revision);
       await this.setPluginEnabled(true);
       await this.disableNativeMouseClick();
       await this.tryEffectMethod("unloadEffect", "mouseclick");

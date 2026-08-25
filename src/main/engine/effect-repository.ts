@@ -114,6 +114,7 @@ export class EffectRepository {
           layerCount: Object.keys(document.elements).length,
           favorite: document.metadata.favorite ?? false,
           builtIn: document.metadata.tags.includes("built-in"),
+          target: document.target ?? "click",
         };
       } catch { return null; }
     }));
@@ -151,11 +152,11 @@ export class EffectRepository {
     await mkdir(revisionRoot, { recursive: true, mode: 0o700 });
     await atomicWrite(join(revisionRoot, "document.json"), `${JSON.stringify(document, null, 2)}\n`);
     await atomicWrite(join(revisionRoot, "runtime.json"), `${JSON.stringify(runtime)}\n`);
-    await atomicWrite(join(revisionRoot, "manifest.json"), `${JSON.stringify({ schemaVersion: 2, runtimeVersion: 1, effectId: document.id, revision, engineVersion: ENGINE_VERSION, capabilities: ["motion.shapes.v2", "motion.hierarchy.v1", "motion.tracks.v1"] }, null, 2)}\n`);
+    await atomicWrite(join(revisionRoot, "manifest.json"), `${JSON.stringify({ schemaVersion: 2, runtimeVersion: 1, effectId: document.id, target: document.target ?? "click", revision, engineVersion: ENGINE_VERSION, capabilities: ["motion.shapes.v2", "motion.hierarchy.v1", "motion.tracks.v1", ...(document.target === "halo" ? ["motion.halo.v1"] : [])] }, null, 2)}\n`);
     await this.saveDraft(document, document.metadata.tags.includes("built-in"));
     const deployedAt = new Date().toISOString();
     await atomicWrite(join(root, "current.json"), `${JSON.stringify({ revision, deployedAt } satisfies CurrentRevisionRecord, null, 2)}\n`);
-    return { effectId: document.id, revision, deployedAt, diagnostics: result.diagnostics };
+    return { effectId: document.id, revision, target: document.target ?? "click", deployedAt, diagnostics: result.diagnostics };
   }
 
   private async readCurrent(root: string): Promise<CurrentRevisionRecord | null> {
@@ -174,11 +175,13 @@ export class EffectRepository {
     await rm(this.effectRoot(id), { recursive: true, force: false, maxRetries: 2 });
   }
 
-  async getRuntimeStatus(activeEffectId: string | null, activeRevision: string | null): Promise<RuntimeStatus> {
+  async getRuntimeStatus(activeEffectId: string | null, activeRevision: string | null, activeHaloEffectId: string | null = null, activeHaloRevision: string | null = null): Promise<RuntimeStatus> {
     return {
       engineVersion: ENGINE_VERSION,
       activeEffectId,
       activeRevision,
+      activeHaloEffectId,
+      activeHaloRevision,
       lastKnownGoodRevision: activeRevision,
       diagnostics: [],
       capabilities: ENGINE_CAPABILITIES,
@@ -190,7 +193,7 @@ export class EffectRepository {
     const entries = new Map<string, Buffer>();
     entries.set("effect.json", Buffer.from(`${JSON.stringify(document, null, 2)}\n`));
     entries.set("metadata.json", Buffer.from(`${JSON.stringify(document.metadata, null, 2)}\n`));
-    entries.set("manifest.json", Buffer.from(`${JSON.stringify({ formatVersion: 2, effectId: document.id, schemaVersion: 2, assets: [] }, null, 2)}\n`));
+    entries.set("manifest.json", Buffer.from(`${JSON.stringify({ formatVersion: 2, effectId: document.id, target: document.target ?? "click", schemaVersion: 2, assets: [] }, null, 2)}\n`));
     return createZip(entries);
   }
 

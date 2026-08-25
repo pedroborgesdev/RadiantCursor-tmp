@@ -181,7 +181,7 @@ function registerIpcHandlers(): void {
   ipcMain.handle(RADIANT_CURSOR_IPC.deployEffect, async (event, document: unknown) => {
     assertTrustedFrame(event);
     const deployed = await effectRepository.deployEffect(document);
-    await controller.activateEngineRevision(deployed.effectId, deployed.revision);
+    await controller.activateEngineRevision(deployed.effectId, deployed.revision, deployed.target);
     broadcastState(await controller.getState());
     return deployed;
   });
@@ -193,8 +193,11 @@ function registerIpcHandlers(): void {
 
   ipcMain.handle(RADIANT_CURSOR_IPC.getRuntimeStatus, async (event) => {
     assertTrustedFrame(event);
-    const active = await controller.readActiveEngineRevision();
-    return effectRepository.getRuntimeStatus(active.effectId, active.revision);
+    const [active, halo] = await Promise.all([
+      controller.readActiveEngineRevision("click"),
+      controller.readActiveEngineRevision("halo"),
+    ]);
+    return effectRepository.getRuntimeStatus(active.effectId, active.revision, halo.effectId, halo.revision);
   });
 
   ipcMain.handle(RADIANT_CURSOR_IPC.importImage, async (event) => {

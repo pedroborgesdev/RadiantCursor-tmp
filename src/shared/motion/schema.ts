@@ -1,5 +1,6 @@
 export type Vec2 = readonly [number, number];
 export type ColorHex = `#${string}`;
+export type EffectTarget = "click" | "halo";
 
 export type EasingName =
   | "linear" | "easeInQuad" | "easeOutQuad" | "easeInOutQuad"
@@ -64,6 +65,7 @@ export type ElementDocument = ShapeElementDocument | GroupElementDocument;
 
 export interface EffectDocumentV2 {
   schemaVersion: 2;
+  target?: EffectTarget;
   id: string;
   revision?: `sha256:${string}`;
   metadata: { name: string; description: string; author: string; tags: string[]; favorite?: boolean };
@@ -106,6 +108,7 @@ export interface RuntimeDefinition {
   runtimeVersion: 1;
   compilerVersion: 1;
   effectId: string;
+  target: EffectTarget;
   revision?: `sha256:${string}`;
   durationMs: number;
   maxRadius: number;
@@ -114,10 +117,9 @@ export interface RuntimeDefinition {
 
 export interface EngineDiagnostic { severity: "error" | "warning"; code: string; path: string; message: string }
 export interface ValidationResult { valid: boolean; diagnostics: EngineDiagnostic[]; document?: EffectDocumentV2 }
-export interface EffectSummary { id: string; name: string; description: string; revision: string | null; updatedAt: string; layerCount: number; favorite: boolean; builtIn: boolean }
+export interface EffectSummary { id: string; name: string; description: string; revision: string | null; updatedAt: string; layerCount: number; favorite: boolean; builtIn: boolean; target: EffectTarget }
 export interface SaveResult { document: EffectDocumentV2; savedAt: string }
 export interface ImportResult { document: EffectDocumentV2; importedAssets: number; sourcePath: string }
-export interface DeployResult { effectId: string; revision: string; deployedAt: string; diagnostics: EngineDiagnostic[] }
+export interface DeployResult { effectId: string; revision: string; target: EffectTarget; deployedAt: string; diagnostics: EngineDiagnostic[] }
 
 export const DEFAULT_TRANSFORM: TransformDocument = { position: [0, 0], size: [64, 64], scale: [1, 1], rotationDeg: 0, anchor: [.5, .5], skewXDeg: 0 };
-

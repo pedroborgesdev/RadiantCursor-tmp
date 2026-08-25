@@ -33,9 +33,31 @@ struct Settings {
     float trailOpacity = 0.72f;
     float trailOffsetX = 8.0f;
     float trailOffsetY = 8.0f;
+    Vec2 cursorTextOffset{8,8};
+    Vec2 cursorLinkOffset{8,8};
+    Vec2 cursorCrosshairOffset{8,8};
+    Vec2 cursorBusyOffset{8,8};
+    Vec2 cursorMoveOffset{8,8};
+    Vec2 cursorForbiddenOffset{8,8};
+    Vec2 cursorHelpOffset{8,8};
+    Vec2 cursorResizeHorizontalOffset{8,8};
+    Vec2 cursorResizeVerticalOffset{8,8};
+    Vec2 cursorResizeDiagonalNwSeOffset{8,8};
+    Vec2 cursorResizeDiagonalNeSwOffset{8,8};
     float trailDistance = 0.0f;
     bool trailGlow = true;
     bool trailOnlyPressed = false;
+    bool haloEnabled = false;
+    std::string haloStyle = "orbitTrail";
+    Color haloColor{.55f,.85f,.48f,1};
+    float haloSize = 18.0f;
+    float haloDistance = 48.0f;
+    int haloDensity = 55;
+    float haloOpacity = .82f;
+    float haloSpeed = 1.0f;
+    int haloVariantIntervalMs = 1400;
+    bool haloCycleVariants = true;
+    bool haloGlow = true;
 };
 
 namespace RadiantCursorEngine {
@@ -122,6 +144,9 @@ struct RuntimeConfiguration {
     std::string activeEffectId;
     std::string activeRevision;
     std::optional<RadiantCursorEngine::CompiledEffect> program;
+    std::string activeHaloEffectId;
+    std::string activeHaloRevision;
+    std::optional<RadiantCursorEngine::CompiledEffect> haloProgram;
 };
 
 RuntimeConfiguration loadConfiguration(const std::filesystem::path &dataDirectory);
